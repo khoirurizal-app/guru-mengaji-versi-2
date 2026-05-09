@@ -342,6 +342,7 @@ async function kirimKeGuru(){
     alert("❌ Gagal: "+err.message+"\n\nCoba lagi ya!");
   }
 }
+function playSemangat(){var idx=Math.floor(Math.random()*4);var a=new Audio("audio/semangat"+idx+".mp3");a.play().catch(function(){});}
 function playPraise(idx){var a=new Audio("audio/praise"+idx+".mp3");a.play().catch(function(){});}
 function showVid(type){["vSp","vS"].forEach(function(id){var v=document.getElementById(id);if(v){v.src="video/"+(type==="thumb"?"thumb":"smile")+".mp4";v.load();v.play().catch(function(){});}});}
 function confetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<30;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*.8+"s;animation-duration:"+(1.5+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},3000);}
