@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Miss Diah - Surah An-Nas</title>
+<title>Ngaji Anak - An-Nas</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyAvqohzt_r490Ie7fnzcjLR_nk0nn2g71k",authDomain:"guru-mengaji-c679e.firebaseapp.com",projectId:"guru-mengaji-c679e",storageBucket:"guru-mengaji-c679e.firebasestorage.app",messagingSenderId:"462500091474",appId:"1:462500091474:web:3d9f61f80b0510af90f18b"};
+const app=initializeApp(cfg);const db=getFirestore(app);
+window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTimestamp;
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
@@ -17,6 +26,7 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 .s-siswa{font-size:12px;color:#FA897B;font-weight:800;margin-bottom:10px}
 .notif-box{background:#FFFDE7;border:2px solid #FFDD94;border-radius:14px;padding:12px 16px;font-size:12px;font-weight:800;color:#8B6000;margin-bottom:14px;display:none;max-width:320px}
 .notif-ulang{background:#FFEBEE;border:2px solid #FFCDD2;color:#B71C1C}
+.notif-lulus{background:#E8FAF6;border:2px solid #86E3CE;color:#1A7A6A}
 #btnStart{background:#FA897B;color:#C0392B;border:none;border-radius:50px;padding:18px 52px;font-family:"Nunito",sans-serif;font-size:18px;font-weight:900;cursor:pointer;animation:kb 1.6s ease-in-out infinite}
 @keyframes kb{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .back-link{margin-top:14px;color:#bbb;font-size:12px;cursor:pointer;font-weight:700}
@@ -29,7 +39,7 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 .t-info{flex:1}.t-name{font-size:13px;font-weight:900;color:#333}.t-sub{font-size:10px;color:#aaa;font-weight:700}
 .siswa-chip{background:#FFBFB8;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:800;color:#C0392B}
 .prow{display:flex;gap:4px;flex-wrap:wrap}
-.pd{width:26px;height:26px;border-radius:50%;background:#EEE;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#aaa;transition:all .2s}
+.pd{width:26px;height:26px;border-radius:50%;background:#EEE;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#aaa}
 .pd.cur{background:#FA897B;color:#C0392B;transform:scale(1.15)}.pd.done{background:#C0392B;color:white}
 .bubble{background:white;border-radius:18px;padding:11px 15px;font-size:12px;font-weight:700;color:#555;border:2px solid #FA897B;margin-bottom:10px;line-height:1.6}
 .card{background:white;border-radius:18px;padding:14px;border:2px solid #FFCDD2;margin-bottom:10px;position:relative}
@@ -38,10 +48,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 .a-lt{font-size:11px;color:#888;font-style:italic;margin-bottom:2px;font-weight:700}
 .a-tr{font-size:10px;color:#bbb;font-weight:700}
 .stepbar{display:flex;gap:5px;margin-bottom:4px}
-.sd{flex:1;height:4px;border-radius:4px;background:#EEE;transition:background .3s}
+.sd{flex:1;height:4px;border-radius:4px;background:#EEE}
 .sd.on{background:#FA897B}.sd.done{background:#C0392B}
 .steplbl{font-size:10px;font-weight:800;color:#aaa;text-align:center;margin-bottom:8px}
-.B{width:100%;padding:14px;border:none;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;transition:all .15s}
+.B{width:100%;padding:14px;border:none;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px}
 .B:active{transform:scale(.97)}.B:disabled{opacity:.5;cursor:not-allowed}
 .Bplay{background:#FA897B;color:#C0392B}.Bplay.on{background:#FA897B;color:white}
 .Brec{background:#FA897B;color:white;display:none}
@@ -62,17 +72,15 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 .ujian-card{background:white;border-radius:16px;padding:15px;border:2px solid #FFCDD2;margin-bottom:10px}
 .full-ar{font-family:"Amiri",serif;font-size:20px;text-align:right;direction:rtl;color:#333;line-height:2.1}
 .win-circle{width:110px;height:110px;border-radius:50%;background:#FA897B;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:44px}
-.submit-circle{width:90px;height:90px;border-radius:50%;background:#FFBFB8;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:36px}
 .submit-card{background:white;border-radius:16px;padding:16px;border:2px solid #FFCDD2;margin-bottom:12px}
 .submit-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F5F5F5;font-size:12px}
 .submit-row:last-child{border:none}
 .submit-label{color:#aaa;font-weight:800}.submit-val{color:#333;font-weight:800;text-align:right;flex:1;margin-left:10px}
 .catatan-input{width:100%;padding:12px 14px;border:2px solid #FFCDD2;border-radius:12px;font-family:"Nunito",sans-serif;font-size:13px;font-weight:700;color:#333;outline:none;resize:none;margin-bottom:10px}
-.catatan-input:focus{border-color:#FA897B}
 .upload-progress{background:#FFBFB8;border-radius:12px;padding:14px;margin-bottom:10px;display:none;text-align:center}
 .up-label{font-size:12px;font-weight:800;color:#C0392B;margin-bottom:8px}
 .up-bar-wrap{background:white;border-radius:10px;height:10px;overflow:hidden;margin-bottom:4px}
-.up-bar{background:#C0392B;height:10px;border-radius:10px;width:0%;transition:width .3s}
+.up-bar{background:#C0392B;height:10px;border-radius:10px;width:0%}
 .up-pct{font-size:11px;font-weight:800;color:#C0392B}
 .cfw{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;display:none}
 .cfp{position:absolute;width:9px;height:9px;border-radius:50%;animation:cfall 2.5s ease-in forwards}
@@ -81,13 +89,6 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 </style>
 </head>
 <body>
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
-const cfg={apiKey:"AIzaSyAvqohzt_r490Ie7fnzcjLR_nk0nn2g71k",authDomain:"guru-mengaji-c679e.firebaseapp.com",projectId:"guru-mengaji-c679e",storageBucket:"guru-mengaji-c679e.firebasestorage.app",messagingSenderId:"462500091474",appId:"1:462500091474:web:3d9f61f80b0510af90f18b"};
-const app=initializeApp(cfg);const db=getFirestore(app);
-window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTimestamp;
-</script>
 
 <div id="pg-splash">
   <div class="s-av"><video id="vSp" loop muted playsinline webkit-playsinline preload="auto"></video></div>
@@ -110,16 +111,8 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <div class="bubble" id="bubble">Yuk hafal An-Nas!</div>
   <div class="stepbar"><div class="sd on" id="sd1"></div><div class="sd" id="sd2"></div><div class="sd" id="sd3"></div></div>
   <div class="steplbl" id="steplbl">Dengarkan Miss Diah</div>
-  <div class="card">
-    <div class="cbadge" id="cbadge">Bismillah</div>
-    <div class="a-ar" id="aar"></div>
-    <div class="a-lt" id="alt"></div>
-    <div class="a-tr" id="atr"></div>
-  </div>
-  <button class="B Bplay" id="btnPlay" onclick="guruPlay()">
-    <span id="pIco">♪</span><span id="pLbl">Dengarkan Miss Diah</span>
-    <span class="waves"><span class="wb"></span><span class="wb"></span><span class="wb"></span><span class="wb"></span><span class="wb"></span></span>
-  </button>
+  <div class="card"><div class="cbadge" id="cbadge">Bismillah</div><div class="a-ar" id="aar"></div><div class="a-lt" id="alt"></div><div class="a-tr" id="atr"></div></div>
+  <button class="B Bplay" id="btnPlay" onclick="guruPlay()"><span id="pIco">♪</span><span id="pLbl">Dengarkan Miss Diah</span><span class="waves"><span class="wb"></span><span class="wb"></span><span class="wb"></span><span class="wb"></span><span class="wb"></span></span></button>
   <button class="B Brec" id="btnMic" onclick="toggleMic()"><span id="mIco">●</span><span id="mLbl">Rekam Suaramu!</span></button>
   <button class="B Bsud" id="btnSud" onclick="sudahBaca()">✓ Sudah! Lanjut!</button>
   <button class="B Bnxt" id="btnNxt" onclick="nextSeg()"><span id="nLbl">Lanjut</span></button>
@@ -136,10 +129,7 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <div style="font-size:18px;font-weight:900;color:#333;margin-bottom:4px">Ujian Hafalan!</div>
   <div style="font-size:11px;color:#aaa;font-weight:700;margin-bottom:12px">Baca sendiri dari awal sampai akhir!</div>
   <div class="bubble">Bismillah! Baca sendiri ya!</div>
-  <div class="ujian-card">
-    <div style="font-size:11px;font-weight:800;color:#aaa;margin-bottom:8px;text-align:center">An-Nas</div>
-    <div class="full-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ النَّاسِ (1)<br>مَلِكِ النَّاسِ (2)<br>إِلَٰهِ النَّاسِ (3)<br>مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ (4)<br>الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ (5)<br>مِنَ الْجِنَّةِ وَالنَّاسِ (6)</div>
-  </div>
+  <div class="ujian-card"><div style="font-size:11px;font-weight:800;color:#aaa;margin-bottom:8px;text-align:center">An-Nas</div><div class="full-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ النَّاسِ (1)<br>مَلِكِ النَّاسِ (2)<br>إِلَٰهِ النَّاسِ (3)<br>مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ (4)<br>الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ (5)<br>مِنَ الْجِنَّةِ وَالنَّاسِ (6)</div></div>
   <button class="B" style="background:#FA897B;color:#C0392B" onclick="selesaiUjian()">✓ Selesai Sudah Baca!</button>
 </div></div>
 
@@ -148,14 +138,16 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <h1 style="font-size:22px;font-weight:900;color:#333;margin-bottom:8px">Masya Allah! Selamat!</h1>
   <p id="winMsg" style="color:#888;font-size:13px;margin-bottom:22px;line-height:1.8;font-weight:700">Alhamdulillah!<br>Kamu sudah hafal<br><strong style="color:#C0392B">An-Nas</strong>!</p>
   <button class="B Bsubmit" style="max-width:340px;margin:0 auto 10px" onclick="goSubmit()">📤 Kirim Rekaman ke Bu Guru</button>
-  <button class="B" style="background:#F0F0F0;color:#888;max-width:340px;margin:0 auto 8px" onclick="location.href='index.html'">Lanjut Menu Utama →</button>
+  <button class="B" style="background:#F0F0F0;color:#888;max-width:340px;margin:0 auto 8px" onclick="location.href= + s["next_file"] + ">Lanjut Menu Utama →</button>
   <div class="back-link" onclick="location.href='index.html'">Kembali ke Menu</div>
 </div></div>
 
 <div id="pg-submit"><div class="W">
-  <div class="submit-circle">📤</div>
-  <h2 style="font-size:20px;font-weight:900;color:#333;margin-bottom:4px;text-align:center">Kirim ke Bu Guru</h2>
-  <p style="font-size:12px;color:#aaa;font-weight:700;margin-bottom:14px;text-align:center">Rekaman diupload ke cloud, guru bisa dengarkan dari HP manapun</p>
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:36px">📤</div>
+    <h2 style="font-size:20px;font-weight:900;color:#333;margin-bottom:4px">Kirim ke Bu Guru</h2>
+    <p style="font-size:12px;color:#aaa;font-weight:700">Rekaman diupload ke cloud, guru bisa dengarkan dari HP manapun</p>
+  </div>
   <div class="submit-card">
     <div class="submit-row"><span class="submit-label">Nama</span><span class="submit-val" id="sv-nama">-</span></div>
     <div class="submit-row"><span class="submit-label">Kelas</span><span class="submit-val" id="sv-kelas">-</span></div>
@@ -180,42 +172,42 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
 <script>
 var CLOUDINARY_CLOUD="dx418xpcp",CLOUDINARY_PRESET="guru-mengaji";
 var SURAT_ID="nas",SURAT_NAMA="An-Nas",AYAT_COUNT=6;
-var S=[{"id": "bismillah", "type": "intro", "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "latin": "Bismillaahir rahmaanir rahiim", "arti": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang", "audio_idx": 0}, {"id": "ayat1", "num": 1, "type": "ayat", "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", "latin": "Qul a'uudzu bi rabbin naas", "arti": "Katakanlah: Aku berlindung kepada Tuhannya manusia", "audio_idx": 1}, {"id": "ayat2", "num": 2, "type": "ayat", "arabic": "مَلِكِ النَّاسِ", "latin": "Malikin naas", "arti": "Raja manusia", "audio_idx": 2}, {"id": "ayat3", "num": 3, "type": "ayat", "arabic": "إِلَٰهِ النَّاسِ", "latin": "Ilaahin naas", "arti": "Sembahan manusia", "audio_idx": 3}, {"id": "ayat4", "num": 4, "type": "ayat", "arabic": "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", "latin": "Min syarril waswaasil khannaas", "arti": "dari kejahatan (setan) pembisik yang bersembunyi", "audio_idx": 4}, {"id": "ayat5", "num": 5, "type": "ayat", "arabic": "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", "latin": "Alladzii yuwaswisu fii shuduurin naas", "arti": "yang membisikkan (kejahatan) ke dalam dada manusia", "audio_idx": 5}, {"id": "ayat6", "num": 6, "type": "ayat", "arabic": "مِنَ الْجِنَّةِ وَالنَّاسِ", "latin": "Minal jinnati wan naas", "arti": "dari (golongan) jin dan manusia", "audio_idx": 6}];
+var S=[{"id": "bismillah", "type": "intro", "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "latin": "Bismillaahir rahmaanir rahiim", "arti": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang", "audio_idx": 0}, {"id": "ayat1", "num": 1, "type": "ayat", "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", "latin": "Qul auudzu bi rabbin naas", "arti": "Katakanlah: Aku berlindung kepada Tuhannya manusia", "audio_idx": 1}, {"id": "ayat2", "num": 2, "type": "ayat", "arabic": "مَلِكِ النَّاسِ", "latin": "Malikin naas", "arti": "Raja manusia", "audio_idx": 2}, {"id": "ayat3", "num": 3, "type": "ayat", "arabic": "إِلَٰهِ النَّاسِ", "latin": "Ilaahin naas", "arti": "Sembahan manusia", "audio_idx": 3}, {"id": "ayat4", "num": 4, "type": "ayat", "arabic": "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", "latin": "Min syarril waswaasil khannaas", "arti": "Dari kejahatan setan pembisik yang bersembunyi", "audio_idx": 4}, {"id": "ayat5", "num": 5, "type": "ayat", "arabic": "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", "latin": "Alladzii yuwaswisu fii shuduurin naas", "arti": "Yang membisikkan kejahatan ke dalam dada manusia", "audio_idx": 5}, {"id": "ayat6", "num": 6, "type": "ayat", "arabic": "مِنَ الْجِنَّةِ وَالنَّاسِ", "latin": "Minal jinnati wan naas", "arti": "Dari golongan jin dan manusia", "audio_idx": 6}];
 var ci=0,ael=null,recordings={},recOn=false,mediaRec=null;
 
 function getSiswa(){try{return JSON.parse(localStorage.getItem("gmAI_siswa")||"null");}catch(e){return null;}}
 function getState(){try{return JSON.parse(localStorage.getItem("gmAI_state")||"{}");}catch(e){return {};}}
 function saveState(s){try{localStorage.setItem("gmAI_state",JSON.stringify(s));}catch(e){}}
-function getSuratStatus(){return (getState()[SURAT_ID]||{}).status||"";}
 
 window.onload=function(){
   var vSp=document.getElementById("vSp");
-  vSp.src="video/smile.mp4";vSp.load();vSp.play().catch(function(){setTimeout(function(){vSp.play().catch(function(){});  },500);});
+  vSp.src="video/smile.mp4";vSp.load();
+  vSp.play().catch(function(){setTimeout(function(){vSp.play().catch(function(){});},500);});
   var siswa=getSiswa();
   if(siswa&&siswa.nama){
     document.getElementById("splashSiswa").textContent="Halo, "+siswa.nama+" ("+siswa.kelas+")! 👋";
     document.getElementById("topSiswa").textContent=siswa.nama;
   }
-  // Notifikasi status dari guru
-  var st=getSuratStatus();
+  var st=(getState()[SURAT_ID]||{}).status||"";
   var nb=document.getElementById("notifBox");
-  if(st==="ulang"){
-    nb.style.display="block";nb.className="notif-box notif-ulang";
-    nb.textContent="🔄 Bu Guru minta kamu mengulang hafalan ini. Semangat ya!";
-  } else if(st==="lulus"){
-    nb.style.display="block";nb.className="notif-box";
-    nb.textContent="✅ Alhamdulillah! Bu Guru sudah menilai: LULUS! Keren!";
-  } else if(st==="submitted"){
-    nb.style.display="block";nb.className="notif-box";
-    nb.textContent="⏳ Hafalanmu sudah dikirim. Tunggu penilaian Bu Guru ya!";
-  }
+  if(st==="ulang"){nb.style.display="block";nb.className="notif-box notif-ulang";nb.textContent="🔄 Bu Guru minta kamu mengulang hafalan ini. Semangat ya!";}
+  else if(st==="lulus"){nb.style.display="block";nb.className="notif-box notif-lulus";nb.textContent="✅ Alhamdulillah! Bu Guru sudah menilai: LULUS!";}
+  else if(st==="submitted"){nb.style.display="block";nb.className="notif-box";nb.textContent="⏳ Hafalanmu sudah dikirim. Tunggu penilaian Bu Guru ya!";}
 };
 
 var PAGES=["pg-splash","pg-main","pg-pbk","pg-ujian","pg-win","pg-submit"];
 function showPage(id){PAGES.forEach(function(p){document.getElementById(p).style.display="none";});document.getElementById(id).style.display="block";}
 
-
-  // Selalu mulai dari awal (bismillah) - bug fix
+function startBelajar(){
+  var idx=Math.floor(Math.random()*4);
+  var a=new Audio("audio/semangat"+idx+".mp3");
+  a.onended=function(){doStartBelajar();};
+  a.play().catch(function(){doStartBelajar();});
+}
+function doStartBelajar(){
+  showPage("pg-main");
+  var vS=document.getElementById("vS");
+  vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});
   ci=0;recordings={};loadSeg();
 }
 
@@ -248,7 +240,7 @@ function startRec(){
     mediaRec.start();recOn=true;
     document.getElementById("btnMic").className="B Brec rec";document.getElementById("mIco").textContent="||";document.getElementById("mLbl").textContent="Merekam... Tap untuk berhenti";
     document.getElementById("bubble").textContent="Aku mendengarkan... bacalah!";
-  }).catch(function(){showBtn("btnMic",false);showBtn("btnSud",true);setStep(2);document.getElementById("bubble").textContent="Mikrofon tidak bisa diakses. Tap Sudah!";  });
+  }).catch(function(){showBtn("btnMic",false);showBtn("btnSud",true);setStep(2);document.getElementById("bubble").textContent="Mikrofon tidak bisa diakses. Tap Sudah!";});
 }
 function stopRec(){if(mediaRec&&recOn)mediaRec.stop();}
 
@@ -256,6 +248,7 @@ function sudahBaca(){
   showBtn("btnSud",false);showBtn("btnMic",false);showBtn("btnNxt",true);
   document.getElementById("nLbl").textContent=(ci===S.length-1)?"Dengarkan Rekamanmu":"Lanjut Ayat";
   showVid("thumb");confetti();document.getElementById("bubble").textContent="Masya Allah! Bagus sekali!";
+  playPraise(Math.floor(Math.random()*3));
 }
 function nextSeg(){
   if(ael){ael.pause();ael=null;}showBtn("btnMic",false);showBtn("btnSud",false);showBtn("btnNxt",false);resetPlay();setStep(0);
@@ -288,7 +281,7 @@ function selesaiUjian(){
   var full=getState();full[SURAT_ID]={status:"selesai",selesaiAt:new Date().toISOString()};saveState(full);
   showPage("pg-win");launchFW();bigConfetti();playPraise(7);
   var siswa=getSiswa();
-  if(siswa&&siswa.nama){document.getElementById("winMsg").innerHTML="Alhamdulillah, <strong>"+siswa.nama+"</strong>!<br>Kamu sudah hafal<br><strong style='color:#C0392B'>An-Nas</strong>!";}
+  if(siswa&&siswa.nama){document.getElementById("winMsg").innerHTML="Alhamdulillah, <strong>"+siswa.nama+"</strong>!<br>Kamu sudah hafal<br><strong style='color:#C0392B>An-Nas</strong>!";}
 }
 function goSubmit(){
   showPage("pg-submit");
@@ -332,7 +325,8 @@ async function kirimKeGuru(){
     await window._addDoc(window._col(db,"submissions"),{nama:siswa.nama,kelas:siswa.kelas,surat:SURAT_NAMA,suratId:SURAT_ID,audioUrls:audioUrls,catatan:catatan,status:"menunggu",kirimAt:window._ts(),jmlRekaman:recKeys.length});
     var full=getState();full[SURAT_ID]={status:"submitted",submittedAt:new Date().toISOString()};saveState(full);
     document.getElementById("uploadProgress").style.display="none";
-    playPraise(Math.floor(Math.random()*6));alert("✅ Alhamdulillah!\n\nRekaman "+siswa.nama+" sudah terkirim!\nBu Guru bisa mendengarkan sekarang 😊");
+    playPraise(Math.floor(Math.random()*6));
+    alert("✅ Alhamdulillah!\n\nRekaman "+siswa.nama+" sudah terkirim!\nBu Guru bisa mendengarkan sekarang 😊");
     location.href="index.html";
   }catch(err){
     document.getElementById("uploadProgress").style.display="none";
@@ -340,20 +334,7 @@ async function kirimKeGuru(){
     alert("❌ Gagal: "+err.message+"\n\nCoba lagi ya!");
   }
 }
-function playSemangat(){var idx=Math.floor(Math.random()*4);var a=new Audio("audio/semangat"+idx+".mp3");a.play().catch(function(){});}
 function playPraise(idx){var a=new Audio("audio/praise"+idx+".mp3");a.play().catch(function(){});}
-function startBelajar(){
-  var idx=Math.floor(Math.random()*4);
-  var a=new Audio("audio/semangat"+idx+".mp3");
-  a.onended=function(){doStartBelajar();};
-  a.play().catch(function(){doStartBelajar();});
-}
-function doStartBelajar(){
-  showPage("pg-main");
-  var vS=document.getElementById("vS");
-  vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});
-  ci=0;recordings={};loadSeg();
-}
 function showVid(type){["vSp","vS"].forEach(function(id){var v=document.getElementById(id);if(v){v.src="video/"+(type==="thumb"?"thumb":"smile")+".mp4";v.load();v.play().catch(function(){});}});}
 function confetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<30;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*.8+"s;animation-duration:"+(1.5+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},3000);}
 function bigConfetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<60;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;width:"+(6+Math.random()*8)+"px;height:"+(6+Math.random()*8)+"px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*1.2+"s;animation-duration:"+(2+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},4000);}
