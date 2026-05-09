@@ -3,33 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Guru - Miss Diah</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<title>Dashboard Guru - Ngaji Anak SSIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Nunito",sans-serif;min-height:100vh;background:#F0FBF8;padding:16px}
 .wrap{max-width:480px;margin:0 auto}
-
-/* ── HEADER ── */
 .header{background:linear-gradient(135deg,#2A9D8F,#1A7A6A);border-radius:20px;padding:20px;margin-bottom:16px;color:white;text-align:center}
 .header h1{font-size:20px;font-weight:900;margin-bottom:4px}
 .header p{font-size:12px;opacity:.8;font-weight:700}
 .guru-badge{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:800;display:inline-block;margin-bottom:8px}
-
-/* ── STATS ── */
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
 .stat-box{background:white;border-radius:14px;padding:14px;text-align:center;border:2px solid #E8FAF6}
 .stat-num{font-size:26px;font-weight:900;color:#2A9D8F;line-height:1}
 .stat-lbl{font-size:10px;font-weight:800;color:#aaa;margin-top:4px}
-
-/* ── FILTER ── */
 .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .filter-btn{padding:7px 14px;border:2px solid #E8FAF6;border-radius:20px;font-family:"Nunito",sans-serif;font-size:11px;font-weight:800;cursor:pointer;background:white;color:#888;transition:all .15s}
 .filter-btn.active{background:#2A9D8F;color:white;border-color:#2A9D8F}
-
-/* ── SUBMISSION CARD ── */
-.sub-card{background:white;border-radius:16px;padding:16px;margin-bottom:10px;border:2px solid #E8FAF6;transition:all .2s}
-.sub-card:hover{border-color:#86E3CE;box-shadow:0 2px 12px #86E3CE33}
+.sub-card{background:white;border-radius:16px;padding:16px;margin-bottom:10px;border:2px solid #E8FAF6}
 .sub-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .sub-av{width:40px;height:40px;border-radius:50%;background:#E8FAF6;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .sub-info{flex:1}
@@ -40,22 +34,23 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#F0FBF8;padding
 .status-lulus{background:#E8FAF6;color:#1A7A6A;border:1.5px solid #86E3CE}
 .status-ulang{background:#FFEBEE;color:#B71C1C;border:1.5px solid #FFCDD2}
 .sub-detail{font-size:11px;color:#888;font-weight:700;background:#F9F9F9;border-radius:10px;padding:8px 12px;margin-bottom:10px;line-height:1.8}
-.sub-catatan{font-size:11px;color:#555;font-weight:700;background:#FFFDE7;border-radius:10px;padding:8px 12px;margin-bottom:10px;border-left:3px solid #FFDD94;display:none}
+.sub-catatan{font-size:11px;color:#555;font-weight:700;background:#FFFDE7;border-radius:10px;padding:8px 12px;margin-bottom:10px;border-left:3px solid #FFDD94}
+.audio-list{margin-bottom:10px}
+.audio-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F0FBF8;border-radius:10px;margin-bottom:6px;cursor:pointer;border:1.5px solid #E8FAF6;transition:all .15s}
+.audio-item:hover{border-color:#86E3CE}
+.audio-item.playing{border-color:#2A9D8F;background:#E8FAF6}
+.audio-label{font-size:11px;font-weight:800;color:#2A9D8F;flex:1}
+.audio-play{font-size:16px}
 .btn-row{display:flex;gap:8px}
-.btn-lulus{flex:1;padding:10px;border:none;border-radius:10px;background:#2A9D8F;color:white;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:all .15s}
-.btn-lulus:active{transform:scale(.97)}
-.btn-ulang{flex:1;padding:10px;border:2px solid #FA897B;border-radius:10px;background:white;color:#C0392B;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:all .15s}
-.btn-ulang:active{transform:scale(.97)}
-.btn-done{width:100%;padding:10px;border:none;border-radius:10px;background:#E8FAF6;color:#2A9D8F;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:default}
-.btn-ulang-done{width:100%;padding:10px;border:none;border-radius:10px;background:#FFEBEE;color:#B71C1C;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:default}
-
-/* ── KOSONG ── */
+.btn-lulus{flex:1;padding:10px;border:none;border-radius:10px;background:#2A9D8F;color:white;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:pointer}
+.btn-ulang{flex:1;padding:10px;border:2px solid #FA897B;border-radius:10px;background:white;color:#C0392B;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;cursor:pointer}
+.btn-done{width:100%;padding:10px;border:none;border-radius:10px;background:#E8FAF6;color:#2A9D8F;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800}
+.btn-ulang-done{width:100%;padding:10px;border:none;border-radius:10px;background:#FFEBEE;color:#B71C1C;font-family:"Nunito",sans-serif;font-size:12px;font-weight:800}
 .empty{text-align:center;padding:40px 20px;color:#ccc}
 .empty-icon{font-size:48px;margin-bottom:12px}
-.empty-txt{font-size:14px;font-weight:800;margin-bottom:6px;color:#aaa}
+.empty-txt{font-size:14px;font-weight:800;color:#aaa;margin-bottom:6px}
 .empty-sub{font-size:11px;font-weight:700}
-
-/* ── MODAL NILAI ── */
+.loading{text-align:center;padding:30px;color:#86E3CE;font-weight:800;font-size:13px}
 #modal-nilai{display:none;position:fixed;inset:0;background:#00000066;z-index:999;align-items:center;justify-content:center;padding:20px}
 #modal-nilai.show{display:flex}
 .modal-box{background:white;border-radius:20px;padding:24px;max-width:360px;width:100%}
@@ -66,56 +61,39 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#F0FBF8;padding
 .modal-btns{display:flex;gap:8px}
 .modal-ok{flex:1;padding:12px;border:none;border-radius:10px;background:#2A9D8F;color:white;font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;cursor:pointer}
 .modal-batal{flex:1;padding:12px;border:2px solid #EEE;border-radius:10px;background:white;color:#888;font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;cursor:pointer}
-
 .footer{text-align:center;margin-top:16px;font-size:10px;color:#ccc;font-weight:700}
+.refresh-btn{background:white;border:2px solid #86E3CE;color:#2A9D8F;border-radius:20px;padding:6px 16px;font-family:"Nunito",sans-serif;font-size:11px;font-weight:800;cursor:pointer;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- HEADER -->
+<div class="wrap">
   <div class="header">
     <div class="guru-badge">👩‍🏫 Mode Guru</div>
     <h1>Dashboard Penilaian</h1>
-    <p>Guru Mengaji AI - Miss Diah</p>
+    <p>Ngaji Anak by SSIS</p>
+    <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
   </div>
-
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat-box">
-      <div class="stat-num" id="stat-total">0</div>
-      <div class="stat-lbl">Total Kiriman</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-menunggu" style="color:#B8860B">0</div>
-      <div class="stat-lbl">Menunggu</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" id="stat-lulus" style="color:#2A9D8F">0</div>
-      <div class="stat-lbl">Lulus</div>
-    </div>
+    <div class="stat-box"><div class="stat-num" id="stat-total">-</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-menunggu" style="color:#B8860B">-</div><div class="stat-lbl">Menunggu</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-lulus" style="color:#2A9D8F">-</div><div class="stat-lbl">Lulus</div></div>
   </div>
-
-  <!-- FILTER -->
   <div class="filter-row">
     <button class="filter-btn active" onclick="setFilter('semua',this)">Semua</button>
     <button class="filter-btn" onclick="setFilter('menunggu',this)">⏳ Menunggu</button>
     <button class="filter-btn" onclick="setFilter('lulus',this)">✅ Lulus</button>
-    <button class="filter-btn" onclick="setFilter('ulang',this)">🔄 Perlu Ulang</button>
+    <button class="filter-btn" onclick="setFilter('ulang',this)">🔄 Ulang</button>
   </div>
-
-  <!-- LIST -->
-  <div id="subList"></div>
-
-  <div class="footer">Guru Mengaji AI - Miss Diah 2025 &bull; <span style="cursor:pointer;color:#FA897B" onclick="resetDemo()">Reset Demo</span></div>
+  <div id="subList"><div class="loading">⏳ Memuat data...</div></div>
+  <div class="footer">Ngaji Anak by SSIS 2025</div>
 </div>
 
-<!-- MODAL NILAI -->
 <div id="modal-nilai">
   <div class="modal-box">
     <h3 id="modal-title">Beri Nilai</h3>
-    <p id="modal-sub">Tambahkan catatan untuk siswa (opsional)</p>
-    <textarea class="modal-input" id="modal-catatan" rows="3" placeholder="Mis: Bagus! Ayat 2 perlu diperbaiki sedikit..."></textarea>
+    <p id="modal-sub">Tambahkan catatan untuk siswa</p>
+    <textarea class="modal-input" id="modal-catatan" rows="3" placeholder="Catatan untuk siswa..."></textarea>
     <div class="modal-btns">
       <button class="modal-ok" id="modal-ok-btn" onclick="konfirmasiNilai()">✅ Konfirmasi</button>
       <button class="modal-batal" onclick="tutupModal()">Batal</button>
@@ -124,159 +102,200 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#F0FBF8;padding
 </div>
 
 <script>
-var currentFilter="semua";
-var pendingAction=null; // {idx, action}
+// ── FIREBASE INIT (compat mode - lebih reliable) ──
+var firebaseConfig = {
+  apiKey: "AIzaSyAvqohzt_r490Ie7fnzcjLR_nk0nn2g71k",
+  authDomain: "guru-mengaji-c679e.firebaseapp.com",
+  projectId: "guru-mengaji-c679e",
+  storageBucket: "guru-mengaji-c679e.firebasestorage.app",
+  messagingSenderId: "462500091474",
+  appId: "1:462500091474:web:3d9f61f80b0510af90f18b"
+};
 
-// ══════════════════════════════════════════════════
-//  LOAD DATA
-// ══════════════════════════════════════════════════
-function getSubmissions(){
-  try{ return JSON.parse(localStorage.getItem("gmAI_submissions")||"[]"); }catch(e){return [];}
-}
-function saveSubmissions(arr){
-  try{ localStorage.setItem("gmAI_submissions", JSON.stringify(arr)); }catch(e){}
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+
+// ── STATE ──
+var allData = [], currentFilter = "semua", pendingAction = null, currentAudio = null;
+
+// ── LOAD DATA ──
+async function loadData(){
+  document.getElementById("subList").innerHTML = "<div class='loading'>⏳ Memuat data dari Firebase...</div>";
+  try {
+    var snap = await db.collection("submissions").orderBy("kirimAt","desc").get();
+    allData = [];
+    snap.forEach(function(d){
+      var data = d.data();
+      data.id = d.id;
+      allData.push(data);
+    });
+    renderList();
+  } catch(err){
+    // Coba tanpa orderBy kalau index belum ada
+    try {
+      var snap2 = await db.collection("submissions").get();
+      allData = [];
+      snap2.forEach(function(d){
+        var data = d.data();
+        data.id = d.id;
+        allData.push(data);
+      });
+      // Sort manual
+      allData.sort(function(a,b){
+        var ta = a.kirimAt && a.kirimAt.seconds ? a.kirimAt.seconds : 0;
+        var tb = b.kirimAt && b.kirimAt.seconds ? b.kirimAt.seconds : 0;
+        return tb - ta;
+      });
+      renderList();
+    } catch(err2){
+      document.getElementById("subList").innerHTML =
+        "<div class='empty'><div class='empty-icon'>⚠️</div><div class='empty-txt'>Gagal memuat</div><div class='empty-sub'>"+err2.message+"</div></div>";
+    }
+  }
 }
 
-function updateStats(list){
-  document.getElementById("stat-total").textContent=list.length;
-  document.getElementById("stat-menunggu").textContent=list.filter(function(s){return s.status==="menunggu";}).length;
-  document.getElementById("stat-lulus").textContent=list.filter(function(s){return s.status==="lulus";}).length;
+// ── RENDER ──
+function updateStats(){
+  document.getElementById("stat-total").textContent = allData.length;
+  document.getElementById("stat-menunggu").textContent = allData.filter(function(s){return !s.status||s.status==="menunggu";}).length;
+  document.getElementById("stat-lulus").textContent = allData.filter(function(s){return s.status==="lulus";}).length;
 }
 
 function setFilter(f, btn){
-  currentFilter=f;
+  currentFilter = f;
   document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active");});
   if(btn) btn.classList.add("active");
   renderList();
 }
 
 function renderList(){
-  var all=getSubmissions();
-  updateStats(all);
-  var list=currentFilter==="semua"?all:all.filter(function(s){return s.status===currentFilter;});
-  // Urutkan: menunggu duluan, terbaru duluan
-  list.sort(function(a,b){
-    if(a.status==="menunggu"&&b.status!=="menunggu") return -1;
-    if(b.status==="menunggu"&&a.status!=="menunggu") return 1;
-    return b.id - a.id;
+  updateStats();
+  var list = currentFilter==="semua" ? allData : allData.filter(function(s){
+    return (s.status||"menunggu") === currentFilter;
   });
 
-  var el=document.getElementById("subList");
-  if(list.length===0){
-    el.innerHTML="<div class='empty'><div class='empty-icon'>📭</div><div class='empty-txt'>Belum ada kiriman</div><div class='empty-sub'>Siswa yang selesai hafalan akan muncul di sini</div></div>";
+  var el = document.getElementById("subList");
+  if(list.length === 0){
+    el.innerHTML = "<div class='empty'><div class='empty-icon'>📭</div><div class='empty-txt'>Belum ada kiriman</div><div class='empty-sub'>Siswa yang selesai hafalan akan muncul di sini</div></div>";
     return;
   }
-  el.innerHTML="";
-  list.forEach(function(sub, idx){
-    var realIdx=all.indexOf(sub);
-    var tgl=new Date(sub.kirimAt).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
-    var statusClass="status-"+sub.status;
-    var statusLabel=sub.status==="menunggu"?"⏳ Menunggu":sub.status==="lulus"?"✅ Lulus":"🔄 Perlu Ulang";
 
-    var div=document.createElement("div");
-    div.className="sub-card";
-    div.innerHTML=
-      "<div class='sub-top'>"+
-        "<div class='sub-av'>🧒</div>"+
-        "<div class='sub-info'>"+
-          "<div class='sub-nama'>"+escHtml(sub.nama)+"</div>"+
-          "<div class='sub-meta'>"+escHtml(sub.kelas)+" &bull; "+escHtml(sub.surat)+" &bull; "+tgl+"</div>"+
-        "</div>"+
-        "<div class='sub-status "+statusClass+"'>"+statusLabel+"</div>"+
-      "</div>"+
-      "<div class='sub-detail'>"+
-        "📝 "+sub.jmlRekaman+" ayat direkam"+
-        (sub.nilaiCatatan?"<br>💬 Catatan guru: <em>"+escHtml(sub.nilaiCatatan)+"</em>":"")+
-      "</div>"+
-      (sub.catatan?"<div class='sub-catatan' style='display:block'>📩 Pesan siswa: \""+escHtml(sub.catatan)+"\"</div>":"")+
-      "<div class='btn-row' id='btnrow-"+realIdx+"'>"+
-        (sub.status==="menunggu"
-          ?"<button class='btn-lulus' onclick='bukaNilai("+realIdx+",\"lulus\")'>✅ Lulus</button>"+
-            "<button class='btn-ulang' onclick='bukaNilai("+realIdx+",\"ulang\")'>🔄 Perlu Ulang</button>"
-          : sub.status==="lulus"
-          ?"<button class='btn-done'>✅ Sudah Dinilai: Lulus</button>"
-          :"<button class='btn-ulang-done'>🔄 Sudah Dinilai: Perlu Ulang</button>"
-        )+
-      "</div>";
+  el.innerHTML = "";
+  list.forEach(function(sub){
+    var tgl = "-";
+    if(sub.kirimAt && sub.kirimAt.seconds){
+      tgl = new Date(sub.kirimAt.seconds*1000).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
+    }
+    var st = sub.status || "menunggu";
+    var statusClass = "status-"+st;
+    var statusLabel = st==="lulus"?"✅ Lulus":st==="ulang"?"🔄 Perlu Ulang":"⏳ Menunggu";
+
+    var div = document.createElement("div");
+    div.className = "sub-card";
+
+    // Audio list
+    var audioHtml = "";
+    if(sub.audioUrls && Object.keys(sub.audioUrls).length > 0){
+      audioHtml = "<div class='audio-list'>";
+      Object.keys(sub.audioUrls).sort().forEach(function(label){
+        var url = sub.audioUrls[label];
+        var display = label==="bismillah" ? "🌟 Bismillah" : "📖 Ayat "+label.replace("ayat","");
+        audioHtml += "<div class='audio-item' onclick='playAudio(this,\""+escJs(url)+"\")'>" +
+          "<span class='audio-play'>▶</span>" +
+          "<span class='audio-label'>"+display+"</span>" +
+          "<span style='font-size:10px;color:#aaa;font-weight:700'>Tap dengar</span>" +
+          "</div>";
+      });
+      audioHtml += "</div>";
+    }
+
+    var catatanHtml = sub.catatan ? "<div class='sub-catatan'>📩 \""+escHtml(sub.catatan)+"\"</div>" : "";
+    var nilaiCatatanHtml = sub.nilaiCatatan ? "<br>💬 Catatan guru: <em>"+escHtml(sub.nilaiCatatan)+"</em>" : "";
+
+    var btnHtml = "";
+    if(st==="menunggu"){
+      btnHtml = "<div class='btn-row'>" +
+        "<button class='btn-lulus' onclick='bukaNilai(\""+sub.id+"\",\"lulus\")'>✅ Lulus</button>" +
+        "<button class='btn-ulang' onclick='bukaNilai(\""+sub.id+"\",\"ulang\")'>🔄 Perlu Ulang</button>" +
+        "</div>";
+    } else if(st==="lulus"){
+      btnHtml = "<button class='btn-done'>✅ Sudah Dinilai: Lulus</button>";
+    } else {
+      btnHtml = "<button class='btn-ulang-done'>🔄 Sudah Dinilai: Perlu Ulang</button>";
+    }
+
+    div.innerHTML =
+      "<div class='sub-top'>" +
+        "<div class='sub-av'>🧒</div>" +
+        "<div class='sub-info'>" +
+          "<div class='sub-nama'>"+escHtml(sub.nama||"-")+"</div>" +
+          "<div class='sub-meta'>"+escHtml(sub.kelas||"-")+" • "+escHtml(sub.surat||"-")+" • "+tgl+"</div>" +
+        "</div>" +
+        "<div class='sub-status "+statusClass+"'>"+statusLabel+"</div>" +
+      "</div>" +
+      "<div class='sub-detail'>🎙️ "+(sub.jmlRekaman||0)+" ayat direkam"+nilaiCatatanHtml+"</div>" +
+      catatanHtml + audioHtml + btnHtml;
+
     el.appendChild(div);
   });
 }
 
-// ══════════════════════════════════════════════════
-//  NILAI
-// ══════════════════════════════════════════════════
-function bukaNilai(realIdx, action){
-  pendingAction={idx:realIdx, action:action};
-  var sub=getSubmissions()[realIdx];
-  document.getElementById("modal-title").textContent=action==="lulus"?"✅ Konfirmasi Lulus":"🔄 Perlu Mengulang";
-  document.getElementById("modal-sub").textContent=
-    (action==="lulus"?"Bagus! ":"Ayo semangat! ")+
-    sub.nama+" - "+sub.surat;
-  document.getElementById("modal-catatan").value="";
-  document.getElementById("modal-catatan").placeholder=
-    action==="lulus"
-    ?"Mis: Masya Allah, hafalanmu bagus! Pertahankan ya!"
-    :"Mis: Ayat 3 masih perlu diperbaiki. Coba lagi ya!";
-  document.getElementById("modal-ok-btn").textContent=
-    action==="lulus"?"✅ Lulus!":"🔄 Minta Ulang";
+// ── AUDIO PLAYER ──
+function playAudio(el, url){
+  if(currentAudio){ currentAudio.pause(); currentAudio=null; }
+  document.querySelectorAll(".audio-item").forEach(function(x){
+    x.classList.remove("playing");
+    x.querySelector(".audio-play").textContent="▶";
+  });
+  el.classList.add("playing");
+  el.querySelector(".audio-play").textContent="⏸";
+  var a = new Audio(url);
+  currentAudio = a;
+  a.play().catch(function(){ el.classList.remove("playing"); el.querySelector(".audio-play").textContent="▶"; });
+  a.onended = function(){ el.classList.remove("playing"); el.querySelector(".audio-play").textContent="▶"; currentAudio=null; };
+}
+
+// ── NILAI ──
+function bukaNilai(docId, action){
+  var sub = allData.find(function(s){return s.id===docId;});
+  if(!sub) return;
+  pendingAction = {docId:docId, action:action, sub:sub};
+  document.getElementById("modal-title").textContent = action==="lulus" ? "✅ Konfirmasi Lulus" : "🔄 Perlu Mengulang";
+  document.getElementById("modal-sub").textContent = (action==="lulus"?"Bagus! ":"Semangat! ")+sub.nama+" - "+sub.surat;
+  document.getElementById("modal-catatan").value = "";
+  document.getElementById("modal-catatan").placeholder = action==="lulus"
+    ? "Masya Allah, hafalanmu bagus! Pertahankan ya!"
+    : "Ayat ... masih perlu diperbaiki. Coba lagi ya!";
+  document.getElementById("modal-ok-btn").textContent = action==="lulus" ? "✅ Lulus!" : "🔄 Minta Ulang";
   document.getElementById("modal-nilai").classList.add("show");
 }
 
-function tutupModal(){
-  document.getElementById("modal-nilai").classList.remove("show");
-  pendingAction=null;
-}
+function tutupModal(){ document.getElementById("modal-nilai").classList.remove("show"); pendingAction=null; }
 
-function konfirmasiNilai(){
+async function konfirmasiNilai(){
   if(!pendingAction) return;
-  var catatan=document.getElementById("modal-catatan").value.trim();
-  var all=getSubmissions();
-  var sub=all[pendingAction.idx];
-  if(!sub){ tutupModal(); return; }
-
-  sub.status=pendingAction.action;
-  sub.nilaiAt=new Date().toISOString();
-  sub.nilaiCatatan=catatan;
-  saveSubmissions(all);
-
-  // Update status di state siswa (jika di perangkat sama)
-  // Ini akan update tampilan di menu siswa
-  updateSiswaState(sub);
-
-  tutupModal();
-  renderList();
+  var catatan = document.getElementById("modal-catatan").value.trim();
+  try {
+    await db.collection("submissions").doc(pendingAction.docId).update({
+      status: pendingAction.action,
+      nilaiAt: new Date().toISOString(),
+      nilaiCatatan: catatan
+    });
+    var idx = allData.findIndex(function(s){return s.id===pendingAction.docId;});
+    if(idx>=0){ allData[idx].status=pendingAction.action; allData[idx].nilaiCatatan=catatan; }
+    tutupModal();
+    renderList();
+  } catch(err){
+    alert("Gagal menyimpan: "+err.message);
+  }
 }
 
-function updateSiswaState(sub){
-  try{
-    var full=JSON.parse(localStorage.getItem("gmAI_state")||"{}");
-    if(!full[sub.suratId]) full[sub.suratId]={};
-    full[sub.suratId].status=sub.status;
-    full[sub.suratId].nilaiCatatan=sub.nilaiCatatan;
-    full[sub.suratId].nilaiAt=sub.nilaiAt;
-    localStorage.setItem("gmAI_state", JSON.stringify(full));
-  }catch(e){}
-}
+// ── UTILS ──
+function escHtml(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function escJs(s){ return String(s||"").replace(/\\/g,"\\\\").replace(/"/g,"\\\""); }
 
-// ══════════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════════
-function escHtml(s){
-  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-function resetDemo(){
-  if(!confirm("Reset semua data demo?\n(Data siswa dan submission akan dihapus)")) return;
-  localStorage.removeItem("gmAI_submissions");
-  localStorage.removeItem("gmAI_state");
-  localStorage.removeItem("gmAI_siswa");
-  renderList();
-  alert("Data direset!");
-}
-
-// ══════════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════════
-window.onload=function(){ renderList(); };
+// ── INIT ──
+window.onload = function(){ loadData(); };
 </script>
 </body>
 </html>
