@@ -214,7 +214,7 @@ window.onload=function(){
 var PAGES=["pg-splash","pg-main","pg-pbk","pg-ujian","pg-win","pg-submit"];
 function showPage(id){PAGES.forEach(function(p){document.getElementById(p).style.display="none";});document.getElementById(id).style.display="block";}
 
-function startBelajar(){var idx=Math.floor(Math.random()*4);var a=new Audio("audio/semangat"+idx+".mp3");a.onended=function(){doStartBelajar();};a.play().catch(function(){doStartBelajar();});}function doStartBelajar(){showPage("pg-main");var vS=document.getElementById("vS");vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});ci=0;recordings={};loadSeg();});
+
   // Selalu mulai dari awal (bismillah) - bug fix
   ci=0;recordings={};loadSeg();
 }
@@ -342,6 +342,18 @@ async function kirimKeGuru(){
 }
 function playSemangat(){var idx=Math.floor(Math.random()*4);var a=new Audio("audio/semangat"+idx+".mp3");a.play().catch(function(){});}
 function playPraise(idx){var a=new Audio("audio/praise"+idx+".mp3");a.play().catch(function(){});}
+function startBelajar(){
+  var idx=Math.floor(Math.random()*4);
+  var a=new Audio("audio/semangat"+idx+".mp3");
+  a.onended=function(){doStartBelajar();};
+  a.play().catch(function(){doStartBelajar();});
+}
+function doStartBelajar(){
+  showPage("pg-main");
+  var vS=document.getElementById("vS");
+  vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});
+  ci=0;recordings={};loadSeg();
+}
 function showVid(type){["vSp","vS"].forEach(function(id){var v=document.getElementById(id);if(v){v.src="video/"+(type==="thumb"?"thumb":"smile")+".mp4";v.load();v.play().catch(function(){});}});}
 function confetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<30;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*.8+"s;animation-duration:"+(1.5+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},3000);}
 function bigConfetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<60;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;width:"+(6+Math.random()*8)+"px;height:"+(6+Math.random()*8)+"px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*1.2+"s;animation-duration:"+(2+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},4000);}

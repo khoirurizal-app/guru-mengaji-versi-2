@@ -96,6 +96,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
 .ganti-nama button{background:none;border:none;font-family:"Nunito",sans-serif;font-size:11px;font-weight:800;color:#ccc;cursor:pointer;text-decoration:underline}
 .footer{text-align:center;margin-top:16px;font-size:10px;color:#ddd;font-weight:700}
 </style>
+
+<!-- Firebase untuk sync status dari guru -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -315,7 +319,7 @@ function showMain(siswa){
   var jam=new Date().getHours();
   var salam=jam<11?"Selamat Pagi ☀️":jam<15?"Selamat Siang 🌤️":jam<18?"Selamat Sore 🌅":"Selamat Malam 🌙";
   document.getElementById("heroGreeting").textContent=salam+" • "+siswa.kelas;
-  updateProgress(); updateBadges();
+  updateProgress(); updateBadges(); if(siswa && siswa.nama) syncStatusFromFirebase(siswa);
 }
 
 function updateProgress(){
@@ -351,6 +355,43 @@ function goSurat(url){
   a.onended=function(){ window.location.href=url; };
   a.play().catch(function(){ window.location.href=url; });
 }
+
+// Sync status dari Firebase ke localStorage
+async function syncStatusFromFirebase(siswa){
+  try {
+    var firebaseConfig = {
+      apiKey: "AIzaSyAvqohzt_r490Ie7fnzcjLR_nk0nn2g71k",
+      authDomain: "guru-mengaji-c679e.firebaseapp.com",
+      projectId: "guru-mengaji-c679e",
+      storageBucket: "guru-mengaji-c679e.firebasestorage.app",
+      messagingSenderId: "462500091474",
+      appId: "1:462500091474:web:3d9f61f80b0510af90f18b"
+    };
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    var snap = await db.collection("submissions")
+      .where("nama","==",siswa.nama)
+      .where("kelas","==",siswa.kelas)
+      .get();
+    var full = getState();
+    snap.forEach(function(d){
+      var data = d.data();
+      var sid = data.suratId;
+      if(sid && data.status){
+        if(!full[sid]) full[sid] = {};
+        full[sid].status = data.status;
+        if(data.nilaiCatatan) full[sid].nilaiCatatan = data.nilaiCatatan;
+      }
+    });
+    saveState(full);
+    updateProgress();
+    updateBadges();
+    console.log("Status synced from Firebase");
+  } catch(e){
+    console.log("Sync error:", e);
+  }
+}
+function saveState(s){try{localStorage.setItem("gmAI_state",JSON.stringify(s));}catch(e){}}
 window.onload=function(){
   var siswa=getSiswa();
   if(!siswa||!siswa.nama){
