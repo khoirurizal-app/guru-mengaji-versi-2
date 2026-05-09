@@ -109,13 +109,13 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
   <div class="avatar-label">PILIH AVATARMU</div>
   <div class="avatar-options">
     <div class="av-opt" id="av-cowo" onclick="pilihAvatar('cowo')">
-      <img src="img/avatar_cowo.png" alt="Ikhwan"
+      <img src="avatar_cowo.png" alt="Ikhwan"
         onerror="this.style.fontSize='50px';this.style.lineHeight='90px';this.style.display='block';this.style.width='90px';this.style.height='90px';this.innerHTML='🧒'">
       <div class="av-opt-label">Ikhwan ♂</div>
       <div class="av-check">✅</div>
     </div>
     <div class="av-opt" id="av-cewe" onclick="pilihAvatar('cewe')">
-      <img src="img/avatar_cewe.png" alt="Akhwat"
+      <img src="avatar_cewe.png" alt="Akhwat"
         onerror="this.style.fontSize='50px';this.style.lineHeight='90px';this.style.display='block';this.style.width='90px';this.style.height='90px';this.innerHTML='👧'">
       <div class="av-opt-label">Akhwat ♀</div>
       <div class="av-check">✅</div>
@@ -294,8 +294,8 @@ function gantiNama(){
 }
 
 function getAvatarSrc(avatar){
-  if(avatar==="cowo") return "img/avatar_cowo.png";
-  if(avatar==="cewe") return "img/avatar_cewe.png";
+  if(avatar==="cowo") return "avatar_cowo.png";
+  if(avatar==="cewe") return "avatar_cewe.png";
   if(avatar && avatar.startsWith("data:")) return avatar;
   return "";
 }
