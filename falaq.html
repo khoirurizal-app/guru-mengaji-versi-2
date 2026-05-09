@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Miss Diah - Surah Al-Ikhlas</title>
+<title>Miss Diah - Surah Al-Falaq</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,13 +11,13 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 #pg-splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#FFF9F5;padding:30px;text-align:center}
 .s-av{width:130px;height:130px;border-radius:50%;overflow:hidden;margin:0 auto 16px}
 .s-av video{width:100%;height:100%;object-fit:cover}
-.s-ar{font-family:"Amiri",serif;font-size:32px;color:#2A9D8F;margin-bottom:6px}
+.s-ar{font-family:"Amiri",serif;font-size:32px;color:#B8860B;margin-bottom:6px}
 .s-h1{font-size:22px;font-weight:900;color:#333;margin-bottom:2px}
 .s-sub{font-size:13px;color:#888;font-weight:700;margin-bottom:6px}
-.s-siswa{font-size:12px;color:#86E3CE;font-weight:800;margin-bottom:10px}
+.s-siswa{font-size:12px;color:#FFDD94;font-weight:800;margin-bottom:10px}
 .notif-box{background:#FFFDE7;border:2px solid #FFDD94;border-radius:14px;padding:12px 16px;font-size:12px;font-weight:800;color:#8B6000;margin-bottom:14px;display:none;max-width:320px}
 .notif-ulang{background:#FFEBEE;border:2px solid #FFCDD2;color:#B71C1C}
-#btnStart{background:#86E3CE;color:#2A9D8F;border:none;border-radius:50px;padding:18px 52px;font-family:"Nunito",sans-serif;font-size:18px;font-weight:900;cursor:pointer;animation:kb 1.6s ease-in-out infinite}
+#btnStart{background:#FFDD94;color:#B8860B;border:none;border-radius:50px;padding:18px 52px;font-family:"Nunito",sans-serif;font-size:18px;font-weight:900;cursor:pointer;animation:kb 1.6s ease-in-out infinite}
 @keyframes kb{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .back-link{margin-top:14px;color:#bbb;font-size:12px;cursor:pointer;font-weight:700}
 #pg-main,#pg-pbk,#pg-ujian,#pg-win,#pg-submit{display:none;min-height:100vh;background:#FFF9F5;padding:14px}
@@ -27,53 +27,53 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5}
 .t-av{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;position:relative}
 .t-av video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .t-info{flex:1}.t-name{font-size:13px;font-weight:900;color:#333}.t-sub{font-size:10px;color:#aaa;font-weight:700}
-.siswa-chip{background:#C8F5EC;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:800;color:#2A9D8F}
+.siswa-chip{background:#FFE8A0;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:800;color:#B8860B}
 .prow{display:flex;gap:4px;flex-wrap:wrap}
 .pd{width:26px;height:26px;border-radius:50%;background:#EEE;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#aaa;transition:all .2s}
-.pd.cur{background:#86E3CE;color:#2A9D8F;transform:scale(1.15)}.pd.done{background:#2A9D8F;color:white}
-.bubble{background:white;border-radius:18px;padding:11px 15px;font-size:12px;font-weight:700;color:#555;border:2px solid #86E3CE;margin-bottom:10px;line-height:1.6}
-.card{background:white;border-radius:18px;padding:14px;border:2px solid #E8FAF6;margin-bottom:10px;position:relative}
-.cbadge{position:absolute;top:-1px;left:14px;background:#86E3CE;color:#2A9D8F;border-radius:0 0 9px 9px;padding:2px 10px;font-size:10px;font-weight:800}
+.pd.cur{background:#FFDD94;color:#B8860B;transform:scale(1.15)}.pd.done{background:#B8860B;color:white}
+.bubble{background:white;border-radius:18px;padding:11px 15px;font-size:12px;font-weight:700;color:#555;border:2px solid #FFDD94;margin-bottom:10px;line-height:1.6}
+.card{background:white;border-radius:18px;padding:14px;border:2px solid #FFF3CD;margin-bottom:10px;position:relative}
+.cbadge{position:absolute;top:-1px;left:14px;background:#FFDD94;color:#B8860B;border-radius:0 0 9px 9px;padding:2px 10px;font-size:10px;font-weight:800}
 .a-ar{font-family:"Amiri",serif;font-size:24px;text-align:right;direction:rtl;color:#333;line-height:1.9;margin:8px 0 5px}
 .a-lt{font-size:11px;color:#888;font-style:italic;margin-bottom:2px;font-weight:700}
 .a-tr{font-size:10px;color:#bbb;font-weight:700}
 .stepbar{display:flex;gap:5px;margin-bottom:4px}
 .sd{flex:1;height:4px;border-radius:4px;background:#EEE;transition:background .3s}
-.sd.on{background:#86E3CE}.sd.done{background:#2A9D8F}
+.sd.on{background:#FFDD94}.sd.done{background:#B8860B}
 .steplbl{font-size:10px;font-weight:800;color:#aaa;text-align:center;margin-bottom:8px}
 .B{width:100%;padding:14px;border:none;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;transition:all .15s}
 .B:active{transform:scale(.97)}.B:disabled{opacity:.5;cursor:not-allowed}
-.Bplay{background:#86E3CE;color:#2A9D8F}.Bplay.on{background:#FA897B;color:white}
+.Bplay{background:#FFDD94;color:#B8860B}.Bplay.on{background:#FA897B;color:white}
 .Brec{background:#FA897B;color:white;display:none}
 .Bsud{background:#86E3CE;color:#1A7A6A;display:none}
 .Bnxt{background:white;color:#888;border:2px solid #EEE;display:none}
-.Bsubmit{background:#2A9D8F;color:white}
+.Bsubmit{background:#B8860B;color:white}
 .waves{display:none;gap:3px;align-items:center}
 .Bplay.on .waves{display:flex}
-.wb{width:3px;border-radius:2px;background:#2A9D8F;animation:sw .5s ease-in-out infinite}
+.wb{width:3px;border-radius:2px;background:#B8860B;animation:sw .5s ease-in-out infinite}
 .wb:nth-child(1){height:6px}.wb:nth-child(2){height:14px;animation-delay:.1s}.wb:nth-child(3){height:8px;animation-delay:.2s}.wb:nth-child(4){height:16px;animation-delay:.05s}.wb:nth-child(5){height:6px;animation-delay:.15s}
 @keyframes sw{0%,100%{transform:scaleY(1)}50%{transform:scaleY(2)}}
 .Brec.rec{animation:pulse .9s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #FA897B66}50%{box-shadow:0 0 0 8px #FA897B22}}
 .pb-item{background:white;border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:12px;margin-bottom:8px;border:2px solid #F0F0F0;cursor:pointer}
-.pb-item.playing{border-color:#86E3CE}
-.pb-num{width:32px;height:32px;border-radius:50%;background:#86E3CE;color:#2A9D8F;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.pb-item.playing{border-color:#FFDD94}
+.pb-num{width:32px;height:32px;border-radius:50%;background:#FFDD94;color:#B8860B;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
 .pb-info{flex:1}.pb-title{font-size:12px;font-weight:800;color:#333}.pb-sub{font-size:10px;color:#aaa;font-weight:700;margin-top:1px}
-.ujian-card{background:white;border-radius:16px;padding:15px;border:2px solid #E8FAF6;margin-bottom:10px}
+.ujian-card{background:white;border-radius:16px;padding:15px;border:2px solid #FFF3CD;margin-bottom:10px}
 .full-ar{font-family:"Amiri",serif;font-size:20px;text-align:right;direction:rtl;color:#333;line-height:2.1}
-.win-circle{width:110px;height:110px;border-radius:50%;background:#86E3CE;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:44px}
-.submit-circle{width:90px;height:90px;border-radius:50%;background:#C8F5EC;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:36px}
-.submit-card{background:white;border-radius:16px;padding:16px;border:2px solid #E8FAF6;margin-bottom:12px}
+.win-circle{width:110px;height:110px;border-radius:50%;background:#FFDD94;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:44px}
+.submit-circle{width:90px;height:90px;border-radius:50%;background:#FFE8A0;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.submit-card{background:white;border-radius:16px;padding:16px;border:2px solid #FFF3CD;margin-bottom:12px}
 .submit-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #F5F5F5;font-size:12px}
 .submit-row:last-child{border:none}
 .submit-label{color:#aaa;font-weight:800}.submit-val{color:#333;font-weight:800;text-align:right;flex:1;margin-left:10px}
-.catatan-input{width:100%;padding:12px 14px;border:2px solid #E8FAF6;border-radius:12px;font-family:"Nunito",sans-serif;font-size:13px;font-weight:700;color:#333;outline:none;resize:none;margin-bottom:10px}
-.catatan-input:focus{border-color:#86E3CE}
-.upload-progress{background:#C8F5EC;border-radius:12px;padding:14px;margin-bottom:10px;display:none;text-align:center}
-.up-label{font-size:12px;font-weight:800;color:#2A9D8F;margin-bottom:8px}
+.catatan-input{width:100%;padding:12px 14px;border:2px solid #FFF3CD;border-radius:12px;font-family:"Nunito",sans-serif;font-size:13px;font-weight:700;color:#333;outline:none;resize:none;margin-bottom:10px}
+.catatan-input:focus{border-color:#FFDD94}
+.upload-progress{background:#FFE8A0;border-radius:12px;padding:14px;margin-bottom:10px;display:none;text-align:center}
+.up-label{font-size:12px;font-weight:800;color:#B8860B;margin-bottom:8px}
 .up-bar-wrap{background:white;border-radius:10px;height:10px;overflow:hidden;margin-bottom:4px}
-.up-bar{background:#2A9D8F;height:10px;border-radius:10px;width:0%;transition:width .3s}
-.up-pct{font-size:11px;font-weight:800;color:#2A9D8F}
+.up-bar{background:#B8860B;height:10px;border-radius:10px;width:0%;transition:width .3s}
+.up-pct{font-size:11px;font-weight:800;color:#B8860B}
 .cfw{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;display:none}
 .cfp{position:absolute;width:9px;height:9px;border-radius:50%;animation:cfall 2.5s ease-in forwards}
 @keyframes cfall{0%{opacity:1;transform:translateY(-10px) rotate(0)}100%{opacity:0;transform:translateY(105vh) rotate(720deg)}}
@@ -91,9 +91,9 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
 
 <div id="pg-splash">
   <div class="s-av"><video id="vSp" loop muted playsinline webkit-playsinline preload="auto"></video></div>
-  <div class="s-ar">سورة الإخلاص</div>
+  <div class="s-ar">سورة الفلق</div>
   <div class="s-h1">Miss Diah</div>
-  <div class="s-sub">Surah Al-Ikhlas &bull; Guru Mengaji AI</div>
+  <div class="s-sub">Surah Al-Falaq &bull; Guru Mengaji AI</div>
   <div class="s-siswa" id="splashSiswa"></div>
   <div class="notif-box" id="notifBox"></div>
   <button id="btnStart" onclick="startBelajar()">Mulai Belajar!</button>
@@ -103,11 +103,11 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
 <div id="pg-main"><div class="W">
   <div class="topbar">
     <div class="t-av"><video id="vS" loop muted playsinline webkit-playsinline preload="auto"></video></div>
-    <div class="t-info"><div class="t-name">Miss Diah</div><div class="t-sub">Al-Ikhlas</div></div>
+    <div class="t-info"><div class="t-name">Miss Diah</div><div class="t-sub">Al-Falaq</div></div>
     <div class="siswa-chip" id="topSiswa"></div>
     <div class="prow" id="prow"></div>
   </div>
-  <div class="bubble" id="bubble">Yuk hafal Al-Ikhlas!</div>
+  <div class="bubble" id="bubble">Yuk hafal Al-Falaq!</div>
   <div class="stepbar"><div class="sd on" id="sd1"></div><div class="sd" id="sd2"></div><div class="sd" id="sd3"></div></div>
   <div class="steplbl" id="steplbl">Dengarkan Miss Diah</div>
   <div class="card">
@@ -129,7 +129,7 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <div style="font-size:18px;font-weight:900;color:#333;margin-bottom:4px">Dengarkan Suaramu!</div>
   <div style="font-size:11px;color:#aaa;font-weight:700;margin-bottom:14px">Tap ayat untuk dengarkan rekamanmu</div>
   <div id="pbList"></div>
-  <button class="B" style="background:#86E3CE;color:#2A9D8F" onclick="goUjian()">Lanjut ke Ujian →</button>
+  <button class="B" style="background:#FFDD94;color:#B8860B" onclick="goUjian()">Lanjut ke Ujian →</button>
 </div></div>
 
 <div id="pg-ujian"><div class="W">
@@ -137,18 +137,18 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <div style="font-size:11px;color:#aaa;font-weight:700;margin-bottom:12px">Baca sendiri dari awal sampai akhir!</div>
   <div class="bubble">Bismillah! Baca sendiri ya!</div>
   <div class="ujian-card">
-    <div style="font-size:11px;font-weight:800;color:#aaa;margin-bottom:8px;text-align:center">Al-Ikhlas</div>
-    <div class="full-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ هُوَ اللَّهُ أَحَدٌ (1)<br>اللَّهُ الصَّمَدُ (2)<br>لَمْ يَلِدْ وَلَمْ يُولَدْ (3)<br>وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ (4)</div>
+    <div style="font-size:11px;font-weight:800;color:#aaa;margin-bottom:8px;text-align:center">Al-Falaq</div>
+    <div class="full-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ (1)<br>مِن شَرِّ مَا خَلَقَ (2)<br>وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ (3)<br>وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ (4)<br>وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ (5)</div>
   </div>
-  <button class="B" style="background:#86E3CE;color:#2A9D8F" onclick="selesaiUjian()">✓ Selesai Sudah Baca!</button>
+  <button class="B" style="background:#FFDD94;color:#B8860B" onclick="selesaiUjian()">✓ Selesai Sudah Baca!</button>
 </div></div>
 
 <div id="pg-win"><div class="W" style="text-align:center;padding-top:20px">
   <div class="win-circle">⭐</div>
   <h1 style="font-size:22px;font-weight:900;color:#333;margin-bottom:8px">Masya Allah! Selamat!</h1>
-  <p id="winMsg" style="color:#888;font-size:13px;margin-bottom:22px;line-height:1.8;font-weight:700">Alhamdulillah!<br>Kamu sudah hafal<br><strong style="color:#2A9D8F">Al-Ikhlas</strong>!</p>
+  <p id="winMsg" style="color:#888;font-size:13px;margin-bottom:22px;line-height:1.8;font-weight:700">Alhamdulillah!<br>Kamu sudah hafal<br><strong style="color:#B8860B">Al-Falaq</strong>!</p>
   <button class="B Bsubmit" style="max-width:340px;margin:0 auto 10px" onclick="goSubmit()">📤 Kirim Rekaman ke Bu Guru</button>
-  <button class="B" style="background:#F0F0F0;color:#888;max-width:340px;margin:0 auto 8px" onclick="location.href='fatihah.html'">Lanjut Al-Fatihah →</button>
+  <button class="B" style="background:#F0F0F0;color:#888;max-width:340px;margin:0 auto 8px" onclick="location.href='nas.html'">Lanjut An-Nas →</button>
   <div class="back-link" onclick="location.href='index.html'">Kembali ke Menu</div>
 </div></div>
 
@@ -159,7 +159,7 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
   <div class="submit-card">
     <div class="submit-row"><span class="submit-label">Nama</span><span class="submit-val" id="sv-nama">-</span></div>
     <div class="submit-row"><span class="submit-label">Kelas</span><span class="submit-val" id="sv-kelas">-</span></div>
-    <div class="submit-row"><span class="submit-label">Surat</span><span class="submit-val">Al-Ikhlas</span></div>
+    <div class="submit-row"><span class="submit-label">Surat</span><span class="submit-val">Al-Falaq</span></div>
     <div class="submit-row"><span class="submit-label">Rekaman</span><span class="submit-val" id="sv-rec">-</span></div>
     <div class="submit-row"><span class="submit-label">Tanggal</span><span class="submit-val" id="sv-tgl">-</span></div>
   </div>
@@ -179,8 +179,8 @@ window._db=db;window._addDoc=addDoc;window._col=collection;window._ts=serverTime
 
 <script>
 var CLOUDINARY_CLOUD="dx418xpcp",CLOUDINARY_PRESET="guru-mengaji";
-var SURAT_ID="ikhlas",SURAT_NAMA="Al-Ikhlas",AYAT_COUNT=4;
-var S=[{"id": "bismillah", "type": "intro", "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "latin": "Bismillaahir rahmaanir rahiim", "arti": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang", "audio_idx": 0}, {"id": "ayat1", "num": 1, "type": "ayat", "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ", "latin": "Qul huwallahu ahad", "arti": "Katakanlah: Dialah Allah, Yang Maha Esa", "audio_idx": 1}, {"id": "ayat2", "num": 2, "type": "ayat", "arabic": "اللَّهُ الصَّمَدُ", "latin": "Allahush shamad", "arti": "Allah adalah Tuhan tempat bergantung segala sesuatu", "audio_idx": 2}, {"id": "ayat3", "num": 3, "type": "ayat", "arabic": "لَمْ يَلِدْ وَلَمْ يُولَدْ", "latin": "Lam yalid wa lam yuulad", "arti": "Dia tidak beranak dan tidak pula diperanakkan", "audio_idx": 3}, {"id": "ayat4", "num": 4, "type": "ayat", "arabic": "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", "latin": "Wa lam yakul lahu kufuwan ahad", "arti": "Dan tidak ada seorang pun yang setara dengan Dia", "audio_idx": 4}];
+var SURAT_ID="falaq",SURAT_NAMA="Al-Falaq",AYAT_COUNT=5;
+var S=[{"id": "bismillah", "type": "intro", "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "latin": "Bismillaahir rahmaanir rahiim", "arti": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang", "audio_idx": 0}, {"id": "ayat1", "num": 1, "type": "ayat", "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", "latin": "Qul a'uudzu bi rabbil falaq", "arti": "Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh", "audio_idx": 1}, {"id": "ayat2", "num": 2, "type": "ayat", "arabic": "مِن شَرِّ مَا خَلَقَ", "latin": "Min syarri maa khalaq", "arti": "dari kejahatan (makhluk yang) Dia ciptakan", "audio_idx": 2}, {"id": "ayat3", "num": 3, "type": "ayat", "arabic": "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", "latin": "Wa min syarri ghaasiqin idzaa waqab", "arti": "dan dari kejahatan malam apabila telah gelap gulita", "audio_idx": 3}, {"id": "ayat4", "num": 4, "type": "ayat", "arabic": "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ", "latin": "Wa min syarrin naffaatsaati fil 'uqad", "arti": "dan dari kejahatan (perempuan-perempuan) penyihir yang meniup pada buhul-buhul", "audio_idx": 4}, {"id": "ayat5", "num": 5, "type": "ayat", "arabic": "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", "latin": "Wa min syarri haasidin idzaa hasad", "arti": "dan dari kejahatan orang yang dengki apabila dia dengki", "audio_idx": 5}];
 var ci=0,ael=null,recordings={},recOn=false,mediaRec=null;
 
 function getSiswa(){try{return JSON.parse(localStorage.getItem("gmAI_siswa")||"null");}catch(e){return null;}}
@@ -224,7 +224,7 @@ function startBelajar(){
 function guruPlay(){
   var seg=S[ci];if(ael){ael.pause();ael=null;}
   var btn=document.getElementById("btnPlay");btn.className="B Bplay on";document.getElementById("pLbl").textContent="Memutar...";
-  var a=new Audio("audio/ikhlas_"+seg.audio_idx+".mp3");ael=a;
+  var a=new Audio("audio/falaq_"+seg.audio_idx+".mp3");ael=a;
   a.play().catch(function(){btn.className="B Bplay";document.getElementById("pLbl").textContent="Putar Lagi";afterPlay();});
   a.onended=function(){btn.className="B Bplay";document.getElementById("pLbl").textContent="Putar Lagi";afterPlay();};
 }
@@ -290,7 +290,7 @@ function selesaiUjian(){
   var full=getState();full[SURAT_ID]={status:"selesai",selesaiAt:new Date().toISOString()};saveState(full);
   showPage("pg-win");launchFW();bigConfetti();
   var siswa=getSiswa();
-  if(siswa&&siswa.nama){document.getElementById("winMsg").innerHTML="Alhamdulillah, <strong>"+siswa.nama+"</strong>!<br>Kamu sudah hafal<br><strong style='color:#2A9D8F'>Al-Ikhlas</strong>!";}
+  if(siswa&&siswa.nama){document.getElementById("winMsg").innerHTML="Alhamdulillah, <strong>"+siswa.nama+"</strong>!<br>Kamu sudah hafal<br><strong style='color:#B8860B'>Al-Falaq</strong>!";}
 }
 function goSubmit(){
   showPage("pg-submit");
@@ -326,7 +326,7 @@ async function kirimKeGuru(){
       var label=seg.type==="intro"?"bismillah":"ayat"+seg.num;
       document.getElementById("upLabel").textContent="⬆️ Upload "+(i+1)+" dari "+recKeys.length+"...";
       document.getElementById("upBar").style.width="0%";
-      var url=await uploadAudio(recordings[idx].blob,siswa.nama.replace(/\s+/g,"_")+"_ikhlas_"+label+"_"+Date.now()+".webm");
+      var url=await uploadAudio(recordings[idx].blob,siswa.nama.replace(/\s+/g,"_")+"_falaq_"+label+"_"+Date.now()+".webm");
       audioUrls[label]=url;
     }
     document.getElementById("upLabel").textContent="💾 Menyimpan data...";
