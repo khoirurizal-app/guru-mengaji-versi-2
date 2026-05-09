@@ -3,73 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guru Mengaji AI - Miss Diah</title>
+<title>Ngaji Anak by SSIS</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding:20px}
-.wrap{max-width:420px;margin:0 auto;padding-top:20px}
+.wrap{max-width:420px;margin:0 auto;padding-top:16px}
 
-/* ── MODAL INPUT NAMA ── */
-#modal-nama{position:fixed;inset:0;background:#FFF9F5;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center;overflow-y:auto}
+/* ── MODAL ── */
+#modal-nama{position:fixed;inset:0;background:#FFF9F5;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 24px 40px;text-align:center;overflow-y:auto}
+.mn-logo{font-size:13px;font-weight:900;color:#aaa;letter-spacing:1px;margin-bottom:16px}
 .mn-title{font-size:22px;font-weight:900;color:#333;margin-bottom:4px}
 .mn-sub{font-size:13px;color:#888;font-weight:700;margin-bottom:20px;line-height:1.6}
 
-/* AVATAR PILIHAN */
-.avatar-section{margin-bottom:16px;width:100%;max-width:340px}
-.avatar-label{font-size:12px;font-weight:800;color:#aaa;margin-bottom:10px}
-.avatar-options{display:flex;gap:12px;justify-content:center;margin-bottom:14px}
-.av-opt{border:3px solid #EEE;border-radius:20px;padding:8px;cursor:pointer;transition:all .2s;text-align:center;flex:1;max-width:140px}
-.av-opt.selected{border-color:#86E3CE;background:#E8FAF6}
-.av-opt img{width:80px;height:80px;object-fit:contain;border-radius:12px;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto}
-.av-opt-label{font-size:11px;font-weight:800;color:#888}
+/* AVATAR */
+.avatar-label{font-size:11px;font-weight:900;color:#aaa;letter-spacing:1px;margin-bottom:10px}
+.avatar-options{display:flex;gap:14px;justify-content:center;margin-bottom:16px;width:100%;max-width:340px}
+.av-opt{border:3px solid #EEE;border-radius:20px;padding:10px 8px 8px;cursor:pointer;transition:all .2s;text-align:center;flex:1;background:white}
+.av-opt:active{transform:scale(.97)}
+.av-opt.selected{border-color:#86E3CE;background:#E8FAF6;box-shadow:0 4px 16px #86E3CE44}
+.av-opt img{width:90px;height:90px;object-fit:cover;border-radius:14px;margin:0 auto 6px;display:block}
+.av-opt-label{font-size:11px;font-weight:800;color:#aaa}
 .av-opt.selected .av-opt-label{color:#2A9D8F}
+.av-check{font-size:16px;display:none}
+.av-opt.selected .av-check{display:block}
 
-/* UPLOAD FOTO */
-.upload-section{width:100%;max-width:340px;margin-bottom:14px}
-.upload-label-txt{font-size:12px;font-weight:800;color:#aaa;margin-bottom:8px}
-.upload-box{border:2px dashed #86E3CE;border-radius:14px;padding:14px;cursor:pointer;text-align:center;background:white;transition:all .2s;position:relative}
+/* UPLOAD */
+.divider{display:flex;align-items:center;gap:10px;width:100%;max-width:340px;margin-bottom:12px}
+.divider-line{flex:1;height:1px;background:#EEE}
+.divider-txt{font-size:11px;font-weight:800;color:#ccc}
+.upload-box{width:100%;max-width:340px;border:2px dashed #86E3CE;border-radius:14px;padding:14px;cursor:pointer;text-align:center;background:white;transition:all .2s;margin-bottom:14px;position:relative}
 .upload-box:hover{background:#E8FAF6}
-.upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .upload-preview{width:70px;height:70px;border-radius:50%;object-fit:cover;margin:0 auto 8px;display:none;border:3px solid #86E3CE}
-.upload-icon{font-size:28px;margin-bottom:6px}
+.upload-icon{font-size:26px;margin-bottom:4px}
 .upload-txt{font-size:11px;font-weight:800;color:#888}
 
-/* PREVIEW AVATAR TERPILIH */
-.preview-av{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;border:3px solid #86E3CE;display:none}
-.preview-av.show{display:block}
-
 .mn-input{width:100%;max-width:340px;padding:14px 18px;border:2px solid #86E3CE;border-radius:14px;font-family:"Nunito",sans-serif;font-size:16px;font-weight:800;color:#333;outline:none;text-align:center;margin-bottom:8px}
-.mn-input:focus{border-color:#2A9D8F}
+.mn-input:focus{border-color:#2A9D8F;box-shadow:0 0 0 3px #86E3CE33}
 .mn-input::placeholder{color:#ccc;font-weight:700}
-.mn-kelas{width:100%;max-width:340px;padding:14px 18px;border:2px solid #86E3CE;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:#333;outline:none;background:white;margin-bottom:16px;-webkit-appearance:none}
-.mn-btn{background:#86E3CE;color:#2A9D8F;border:none;border-radius:50px;padding:16px 48px;font-family:"Nunito",sans-serif;font-size:17px;font-weight:900;cursor:pointer;animation:kb 1.6s ease-in-out infinite;max-width:340px;width:100%}
-@keyframes kb{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.mn-kelas{width:100%;max-width:340px;padding:14px 18px;border:2px solid #86E3CE;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:#333;outline:none;background:white;margin-bottom:16px;-webkit-appearance:none;appearance:none}
+.mn-btn{background:linear-gradient(135deg,#86E3CE,#2A9D8F);color:white;border:none;border-radius:50px;padding:16px 48px;font-family:"Nunito",sans-serif;font-size:17px;font-weight:900;cursor:pointer;max-width:340px;width:100%;box-shadow:0 4px 20px #86E3CE66;transition:transform .15s}
+.mn-btn:active{transform:scale(.97)}
 
 /* ── MAIN ── */
+.app-brand{text-align:center;margin-bottom:4px}
+.app-brand-name{font-size:11px;font-weight:900;color:#ccc;letter-spacing:1.5px}
+
 .hero{text-align:center;margin-bottom:20px}
-.hero-avatar{width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 10px;background:#86E3CE;border:3px solid #86E3CE}
-.hero-avatar img{width:100%;height:100%;object-fit:cover}
-.hero-avatar video{width:100%;height:100%;object-fit:cover}
-.hero-title{font-size:22px;font-weight:900;color:#333;margin-bottom:2px}
-.hero-sub{font-size:13px;color:#aaa;font-weight:700;margin-bottom:2px}
-.hero-greeting{font-size:12px;color:#86E3CE;font-weight:800;margin-bottom:4px}
+.hero-avatar-wrap{width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 10px;background:#E8FAF6;border:3px solid #86E3CE;position:relative}
+.hero-avatar-wrap img{width:100%;height:100%;object-fit:cover}
+.hero-avatar-wrap video{width:100%;height:100%;object-fit:cover}
+.hero-title{font-size:20px;font-weight:900;color:#333;margin-bottom:2px}
+.hero-sub{font-size:11px;color:#aaa;font-weight:700;margin-bottom:2px}
+.hero-greeting{font-size:12px;color:#2A9D8F;font-weight:800;margin-bottom:4px}
 
 /* PROGRESS */
 .prog-box{background:white;border-radius:16px;padding:14px 16px;margin-bottom:16px;border:2px solid #E8FAF6;display:flex;gap:10px;align-items:center}
-.prog-icon{font-size:28px}
+.prog-icon{font-size:26px}
 .prog-info{flex:1}
-.prog-label{font-size:11px;font-weight:800;color:#aaa;margin-bottom:4px}
+.prog-label{font-size:10px;font-weight:900;color:#aaa;letter-spacing:.5px;margin-bottom:4px}
 .prog-bar-wrap{background:#EEE;border-radius:10px;height:8px;overflow:hidden}
 .prog-bar{background:linear-gradient(90deg,#86E3CE,#2A9D8F);height:8px;border-radius:10px;transition:width .5s}
 .prog-pct{font-size:11px;font-weight:800;color:#2A9D8F;margin-top:3px}
 
-/* CARD SURAT */
+/* CARD */
 .list{display:flex;flex-direction:column;gap:10px}
 .card{border-radius:20px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;text-decoration:none;transition:transform .15s;position:relative;overflow:hidden}
 .card:active{transform:scale(.97)}
-.card.locked{opacity:.5;cursor:default;pointer-events:none}
-.card svg.bg{position:absolute;right:-10px;top:50%;transform:translateY(-50%);opacity:0.18;pointer-events:none}
+.card.locked{opacity:.45;cursor:default;pointer-events:none}
+.card svg.bg{position:absolute;right:-10px;top:50%;transform:translateY(-50%);opacity:0.15;pointer-events:none}
 .card-dot{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;line-height:1.2;text-align:center;position:relative;z-index:1}
 .info{flex:1;position:relative;z-index:1}
 .arabic{font-family:"Amiri",serif;font-size:18px;margin-bottom:2px}
@@ -77,10 +79,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
 .ayat{font-size:10px;font-weight:700;opacity:.7}
 .right{text-align:right;position:relative;z-index:1}
 .badge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:800}
-.badge.done{background:#2A9D8F!important;color:white!important}
+.badge.lulus{background:#2A9D8F!important;color:white!important}
 .badge.submitted{background:#FFDD94!important;color:#8B6000!important}
-.badge.lulus{background:#86E3CE!important;color:#1A7A6A!important}
 .badge.ulang{background:#FFCDD2!important;color:#B71C1C!important}
+.badge.done{background:#86E3CE!important;color:#1A7A6A!important}
 .arrow{font-size:14px;font-weight:900;margin-top:2px}
 .star-row{font-size:10px;margin-top:2px}
 
@@ -90,40 +92,47 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
 .c4{background:#FFBFB8}.c4 .card-dot{background:#FA897B;color:#8B1A0E}.c4 .arabic,.c4 .latin{color:#8B1A0E}.c4 .ayat{color:#C0392B}.c4 .badge{background:#FA897B;color:#8B1A0E}.c4 .arrow{color:#C0392B}
 .c5{background:#E8D8F5}.c5 .card-dot{background:#CCABD8;color:#5A2D7A}.c5 .arabic,.c5 .latin{color:#5A2D7A}.c5 .ayat{color:#7D5A9E}.c5 .badge{background:#CCABD8;color:#5A2D7A}.c5 .arrow{color:#7D5A9E}
 
-.ganti-nama{text-align:center;margin-top:6px;margin-bottom:10px}
+.ganti-nama{text-align:center;margin-top:8px;margin-bottom:10px}
 .ganti-nama button{background:none;border:none;font-family:"Nunito",sans-serif;font-size:11px;font-weight:800;color:#ccc;cursor:pointer;text-decoration:underline}
-.footer{text-align:center;margin-top:20px;font-size:10px;color:#ddd;font-weight:700}
+.footer{text-align:center;margin-top:16px;font-size:10px;color:#ddd;font-weight:700}
 </style>
 </head>
 <body>
 
 <!-- MODAL INPUT NAMA -->
 <div id="modal-nama">
+  <div class="mn-logo">NGAJI ANAK BY SSIS</div>
   <div class="mn-title">Assalamu'alaikum! 👋</div>
-  <div class="mn-sub">Aku Miss Diah, guru mengaji AI.<br>Kenalan dulu yuk!</div>
+  <div class="mn-sub">Selamat datang di Ngaji Anak!<br>Pilih avatar & masukkan namamu ya 😊</div>
 
   <!-- PILIH AVATAR -->
-  <div class="avatar-section">
-    <div class="avatar-label">PILIH AVATARMU</div>
-    <div class="avatar-options">
-      <div class="av-opt" id="av-cowo" onclick="pilihAvatar('cowo')">
-        <img src="img/avatar_cowo.png" id="av-cowo-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2235%22 r=%2228%22 fill=%22%2386E3CE%22/><circle cx=%2250%22 cy=%22100%22 r=%2238%22 fill=%22%2386E3CE%22/><text x=%2250%22 y=%2248%22 text-anchor=%22middle%22 font-size=%2236%22>🧒</text></svg>'">
-        <div class="av-opt-label">Ikhwan ♂</div>
-      </div>
-      <div class="av-opt" id="av-cewe" onclick="pilihAvatar('cewe')">
-        <img src="img/avatar_cewe.png" id="av-cewe-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2235%22 r=%2228%22 fill=%22%23FA897B%22/><circle cx=%2250%22 cy=%22100%22 r=%2238%22 fill=%22%23FA897B%22/><text x=%2250%22 y=%2248%22 text-anchor=%22middle%22 font-size=%2236%22>👧</text></svg>'">
-        <div class="av-opt-label">Akhwat ♀</div>
-      </div>
+  <div class="avatar-label">PILIH AVATARMU</div>
+  <div class="avatar-options">
+    <div class="av-opt" id="av-cowo" onclick="pilihAvatar('cowo')">
+      <img src="img/avatar_cowo.png" alt="Ikhwan"
+        onerror="this.style.fontSize='50px';this.style.lineHeight='90px';this.style.display='block';this.style.width='90px';this.style.height='90px';this.innerHTML='🧒'">
+      <div class="av-opt-label">Ikhwan ♂</div>
+      <div class="av-check">✅</div>
     </div>
+    <div class="av-opt" id="av-cewe" onclick="pilihAvatar('cewe')">
+      <img src="img/avatar_cewe.png" alt="Akhwat"
+        onerror="this.style.fontSize='50px';this.style.lineHeight='90px';this.style.display='block';this.style.width='90px';this.style.height='90px';this.innerHTML='👧'">
+      <div class="av-opt-label">Akhwat ♀</div>
+      <div class="av-check">✅</div>
+    </div>
+  </div>
 
-    <!-- ATAU UPLOAD FOTO -->
-    <div class="upload-label-txt">ATAU UPLOAD FOTO SENDIRI</div>
-    <div class="upload-box" onclick="document.getElementById('fotoInput').click()">
-      <input type="file" id="fotoInput" accept="image/*" onchange="uploadFoto(event)" style="display:none">
-      <img id="uploadPreview" class="upload-preview">
-      <div id="uploadIcon" class="upload-icon">📷</div>
-      <div class="upload-txt">Tap untuk pilih foto</div>
-    </div>
+  <!-- UPLOAD FOTO -->
+  <div class="divider" style="width:100%;max-width:340px">
+    <div class="divider-line"></div>
+    <div class="divider-txt">ATAU PAKAI FOTO SENDIRI</div>
+    <div class="divider-line"></div>
+  </div>
+  <div class="upload-box" onclick="document.getElementById('fotoInput').click()">
+    <input type="file" id="fotoInput" accept="image/*" onchange="uploadFoto(event)" style="display:none">
+    <img id="uploadPreview" class="upload-preview">
+    <div id="uploadIcon" class="upload-icon">📷</div>
+    <div class="upload-txt">Tap untuk pilih foto dari HP</div>
   </div>
 
   <input class="mn-input" id="inputNama" type="text" placeholder="Nama lengkapmu..." maxlength="40" autocomplete="off">
@@ -146,17 +155,18 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
 
 <!-- HALAMAN UTAMA -->
 <div class="wrap" id="main-content" style="display:none">
+  <div class="app-brand"><div class="app-brand-name">NGAJI ANAK BY SSIS</div></div>
+
   <div class="hero">
-    <div class="hero-avatar" id="heroAvatarWrap">
-      <img id="heroAvatarImg" src="" alt="Avatar" style="width:100%;height:100%;object-fit:cover;display:none">
-      <video id="vMenu" loop muted playsinline webkit-playsinline autoplay preload="auto" style="width:100%;height:100%;object-fit:cover"></video>
+    <div class="hero-avatar-wrap" id="heroAvatarWrap">
+      <img id="heroAvatarImg" src="" alt="" style="display:none">
+      <video id="vMenu" loop muted playsinline webkit-playsinline autoplay preload="auto" style="display:none"></video>
     </div>
-    <div class="hero-title">Miss Diah</div>
-    <div class="hero-sub">Guru Mengaji AI</div>
+    <div class="hero-title" id="heroNama">Halo!</div>
+    <div class="hero-sub">Ngaji Anak by SSIS</div>
     <div class="hero-greeting" id="heroGreeting"></div>
   </div>
 
-  <!-- PROGRESS -->
   <div class="prog-box">
     <div class="prog-icon">📖</div>
     <div class="prog-info">
@@ -167,7 +177,7 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
   </div>
 
   <div class="list">
-    <a href="ikhlas.html" class="card c1" id="card-ikhlas">
+    <a href="ikhlas.html" class="card c1">
       <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><circle cx="90" cy="20" r="30" fill="#2A9D8F"/><circle cx="110" cy="70" r="20" fill="#2A9D8F"/><circle cx="60" cy="85" r="14" fill="#2A9D8F"/></svg>
       <div class="card-dot">QS<br>112</div>
       <div class="info">
@@ -176,10 +186,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
         <div class="ayat">4 ayat</div>
         <div class="star-row" id="star-ikhlas"></div>
       </div>
-      <div class="right"><div class="badge" id="badge-ikhlas">Tersedia</div><div class="arrow">&#8594;</div></div>
+      <div class="right"><div class="badge" id="badge-ikhlas">Tersedia</div><div class="arrow">→</div></div>
     </a>
 
-    <a href="fatihah.html" class="card c2" id="card-fatihah">
+    <a href="fatihah.html" class="card c2">
       <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><rect x="70" y="5" width="40" height="40" rx="10" fill="#5A8A2A"/><rect x="85" y="55" width="30" height="30" rx="8" fill="#5A8A2A"/></svg>
       <div class="card-dot">QS<br>1</div>
       <div class="info">
@@ -188,10 +198,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
         <div class="ayat">7 ayat</div>
         <div class="star-row" id="star-fatihah"></div>
       </div>
-      <div class="right"><div class="badge" id="badge-fatihah">Tersedia</div><div class="arrow">&#8594;</div></div>
+      <div class="right"><div class="badge" id="badge-fatihah">Tersedia</div><div class="arrow">→</div></div>
     </a>
 
-    <a href="falaq.html" class="card c3" id="card-falaq">
+    <a href="falaq.html" class="card c3">
       <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><polygon points="95,5 110,35 80,35" fill="#B8860B"/><polygon points="100,55 115,85 85,85" fill="#B8860B"/></svg>
       <div class="card-dot">QS<br>113</div>
       <div class="info">
@@ -200,10 +210,10 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
         <div class="ayat">5 ayat</div>
         <div class="star-row" id="star-falaq"></div>
       </div>
-      <div class="right"><div class="badge" id="badge-falaq">Tersedia</div><div class="arrow">&#8594;</div></div>
+      <div class="right"><div class="badge" id="badge-falaq">Tersedia</div><div class="arrow">→</div></div>
     </a>
 
-    <a href="nas.html" class="card c4" id="card-nas">
+    <a href="nas.html" class="card c4">
       <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><path d="M90 10 Q110 30 95 50 Q80 70 100 85" stroke="#C0392B" stroke-width="12" fill="none" stroke-linecap="round"/></svg>
       <div class="card-dot">QS<br>114</div>
       <div class="info">
@@ -212,7 +222,7 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
         <div class="ayat">6 ayat</div>
         <div class="star-row" id="star-nas"></div>
       </div>
-      <div class="right"><div class="badge" id="badge-nas">Tersedia</div><div class="arrow">&#8594;</div></div>
+      <div class="right"><div class="badge" id="badge-nas">Tersedia</div><div class="arrow">→</div></div>
     </a>
 
     <div class="card c5 locked">
@@ -223,59 +233,46 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
   </div>
 
   <div class="ganti-nama"><button onclick="gantiNama()">✏️ Ganti nama / avatar</button></div>
-  <div class="footer">Guru Mengaji AI - Miss Diah 2025</div>
+  <div class="footer">Ngaji Anak by SSIS &copy; 2025</div>
 </div>
 
 <script>
 var SURATS=["ikhlas","fatihah","falaq","nas"];
-var selectedAvatar=""; // 'cowo', 'cewe', atau base64 foto
-var uploadedPhotoData="";
+var selectedAvatar="", uploadedPhotoData="";
 
-// ── STORAGE ──
 function getState(){try{return JSON.parse(localStorage.getItem("gmAI_state")||"{}");}catch(e){return {};}}
-function saveState(s){try{localStorage.setItem("gmAI_state",JSON.stringify(s));}catch(e){}}
 function getSiswa(){try{return JSON.parse(localStorage.getItem("gmAI_siswa")||"null");}catch(e){return null;}}
 function saveSiswa(obj){try{localStorage.setItem("gmAI_siswa",JSON.stringify(obj));}catch(e){}}
 
-// ── PILIH AVATAR ──
 function pilihAvatar(type){
-  selectedAvatar=type;
-  uploadedPhotoData="";
+  selectedAvatar=type; uploadedPhotoData="";
   document.getElementById("av-cowo").className="av-opt"+(type==="cowo"?" selected":"");
   document.getElementById("av-cewe").className="av-opt"+(type==="cewe"?" selected":"");
-  // Reset upload preview
   document.getElementById("uploadPreview").style.display="none";
   document.getElementById("uploadIcon").style.display="block";
 }
 
-// ── UPLOAD FOTO ──
 function uploadFoto(e){
-  var file=e.target.files[0];
-  if(!file)return;
+  var file=e.target.files[0]; if(!file)return;
   var reader=new FileReader();
   reader.onload=function(ev){
     uploadedPhotoData=ev.target.result;
     selectedAvatar="foto";
-    // Hilangkan seleksi avatar default
     document.getElementById("av-cowo").className="av-opt";
     document.getElementById("av-cewe").className="av-opt";
-    // Tampilkan preview
     var prev=document.getElementById("uploadPreview");
-    prev.src=uploadedPhotoData;
-    prev.style.display="block";
+    prev.src=uploadedPhotoData; prev.style.display="block";
     document.getElementById("uploadIcon").style.display="none";
   };
   reader.readAsDataURL(file);
 }
 
-// ── SIMPAN NAMA ──
 function simpanNama(){
   var nama=document.getElementById("inputNama").value.trim();
   var kelas=document.getElementById("inputKelas").value;
   if(!nama){alert("Masukkan namamu dulu ya! 😊");return;}
   if(!kelas){alert("Pilih kelasmu dulu ya! 😊");return;}
   if(!selectedAvatar){alert("Pilih avatarmu dulu ya! 😊");return;}
-
   var avatarData=selectedAvatar==="foto"?uploadedPhotoData:selectedAvatar;
   var siswa={nama:nama,kelas:kelas,avatar:avatarData,terdaftar:new Date().toISOString()};
   saveSiswa(siswa);
@@ -283,12 +280,11 @@ function simpanNama(){
   showMain(siswa);
 }
 
-// ── GANTI NAMA ──
 function gantiNama(){
-  if(!confirm("Ganti nama dan avatar? Progress tetap tersimpan."))return;
+  if(!confirm("Ganti nama dan avatar? Progress hafalan tetap tersimpan."))return;
   document.getElementById("inputNama").value="";
   document.getElementById("inputKelas").value="";
-  selectedAvatar="";uploadedPhotoData="";
+  selectedAvatar=""; uploadedPhotoData="";
   document.getElementById("av-cowo").className="av-opt";
   document.getElementById("av-cewe").className="av-opt";
   document.getElementById("uploadPreview").style.display="none";
@@ -297,45 +293,35 @@ function gantiNama(){
   document.getElementById("main-content").style.display="none";
 }
 
-// ── SHOW MAIN ──
-function showMain(siswa){
-  document.getElementById("main-content").style.display="block";
-
-  // Set avatar di hero
-  var avatarImg=document.getElementById("heroAvatarImg");
-  var vMenu=document.getElementById("vMenu");
-  if(siswa.avatar==="cowo"||siswa.avatar==="cewe"){
-    // Pakai gambar avatar
-    var src=siswa.avatar==="cowo"?"img/avatar_cowo.png":"img/avatar_cewe.png";
-    avatarImg.src=src;
-    avatarImg.style.display="block";
-    vMenu.style.display="none";
-  } else if(siswa.avatar && siswa.avatar.startsWith("data:")){
-    // Foto upload
-    avatarImg.src=siswa.avatar;
-    avatarImg.style.display="block";
-    vMenu.style.display="none";
-  } else {
-    // Fallback video Miss Diah
-    vMenu.src="video/smile.mp4";vMenu.load();vMenu.play().catch(function(){});
-    vMenu.style.display="block";
-    avatarImg.style.display="none";
-  }
-
-  // Greeting
-  var jam=new Date().getHours();
-  var salam=jam<11?"Selamat Pagi":jam<15?"Selamat Siang":jam<18?"Selamat Sore":"Selamat Malam";
-  document.getElementById("heroGreeting").textContent=salam+", "+siswa.nama+" ("+siswa.kelas+") 👋";
-
-  updateProgress();
-  updateBadges();
+function getAvatarSrc(avatar){
+  if(avatar==="cowo") return "img/avatar_cowo.png";
+  if(avatar==="cewe") return "img/avatar_cewe.png";
+  if(avatar && avatar.startsWith("data:")) return avatar;
+  return "";
 }
 
-// ── PROGRESS ──
+function showMain(siswa){
+  document.getElementById("main-content").style.display="block";
+  var avatarImg=document.getElementById("heroAvatarImg");
+  var vMenu=document.getElementById("vMenu");
+  var src=getAvatarSrc(siswa.avatar);
+  if(src){
+    avatarImg.src=src; avatarImg.style.display="block"; vMenu.style.display="none";
+  } else {
+    vMenu.src="video/smile.mp4"; vMenu.load(); vMenu.play().catch(function(){});
+    vMenu.style.display="block"; avatarImg.style.display="none";
+  }
+  document.getElementById("heroNama").textContent=siswa.nama;
+  var jam=new Date().getHours();
+  var salam=jam<11?"Selamat Pagi ☀️":jam<15?"Selamat Siang 🌤️":jam<18?"Selamat Sore 🌅":"Selamat Malam 🌙";
+  document.getElementById("heroGreeting").textContent=salam+" • "+siswa.kelas;
+  updateProgress(); updateBadges();
+}
+
 function updateProgress(){
   var state=getState();
   var selesai=SURATS.filter(function(s){
-    var st=state[s]&&state[s].status;
+    var st=(state[s]||{}).status||"";
     return st==="selesai"||st==="submitted"||st==="lulus";
   }).length;
   var pct=Math.round(selesai/SURATS.length*100);
@@ -343,7 +329,6 @@ function updateProgress(){
   document.getElementById("progPct").textContent=selesai+" dari "+SURATS.length+" surat selesai";
 }
 
-// ── BADGE ──
 function updateBadges(){
   var state=getState();
   SURATS.forEach(function(id){
@@ -359,7 +344,6 @@ function updateBadges(){
   });
 }
 
-// ── INIT ──
 window.onload=function(){
   var siswa=getSiswa();
   if(!siswa||!siswa.nama){
