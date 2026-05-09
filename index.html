@@ -345,14 +345,11 @@ function updateBadges(){
 }
 
 
-function playSemangat(){
+function goSurat(url){
   var idx=Math.floor(Math.random()*4);
   var a=new Audio("audio/semangat"+idx+".mp3");
-  a.play().catch(function(){});
-}
-function goSurat(url){
-  playSemangat();
-  setTimeout(function(){ window.location.href=url; }, 300);
+  a.onended=function(){ window.location.href=url; };
+  a.play().catch(function(){ window.location.href=url; });
 }
 window.onload=function(){
   var siswa=getSiswa();
