@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guru Mengaji AI - Miss Diah</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding:20px}
+.wrap{max-width:420px;margin:0 auto;padding-top:20px}
+
+/* ── MODAL INPUT NAMA ── */
+#modal-nama{position:fixed;inset:0;background:#FFF9F5;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.mn-av{width:100px;height:100px;border-radius:50%;overflow:hidden;margin:0 auto 16px;background:#86E3CE}
+.mn-av video{width:100%;height:100%;object-fit:cover}
+.mn-title{font-size:22px;font-weight:900;color:#333;margin-bottom:6px}
+.mn-sub{font-size:13px;color:#888;font-weight:700;margin-bottom:24px;line-height:1.6}
+.mn-input{width:100%;max-width:300px;padding:14px 18px;border:2px solid #86E3CE;border-radius:14px;font-family:"Nunito",sans-serif;font-size:16px;font-weight:800;color:#333;outline:none;text-align:center;margin-bottom:8px}
+.mn-input:focus{border-color:#2A9D8F;box-shadow:0 0 0 3px #86E3CE44}
+.mn-input::placeholder{color:#ccc;font-weight:700}
+.mn-kelas{width:100%;max-width:300px;padding:14px 18px;border:2px solid #86E3CE;border-radius:14px;font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:#333;outline:none;background:white;margin-bottom:16px;-webkit-appearance:none}
+.mn-btn{background:#86E3CE;color:#2A9D8F;border:none;border-radius:50px;padding:16px 48px;font-family:"Nunito",sans-serif;font-size:17px;font-weight:900;cursor:pointer;animation:kb 1.6s ease-in-out infinite;max-width:300px;width:100%}
+@keyframes kb{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* ── HERO ── */
+.hero{text-align:center;margin-bottom:20px}
+.avatar{width:90px;height:90px;border-radius:50%;overflow:hidden;margin:0 auto 10px;background:#86E3CE}
+.avatar video{width:100%;height:100%;object-fit:cover}
+.hero-title{font-size:22px;font-weight:900;color:#333;margin-bottom:2px}
+.hero-sub{font-size:13px;color:#aaa;font-weight:700;margin-bottom:2px}
+.hero-greeting{font-size:12px;color:#86E3CE;font-weight:800;margin-bottom:4px}
+
+/* ── PROGRESS SUMMARY ── */
+.prog-box{background:white;border-radius:16px;padding:14px 16px;margin-bottom:16px;border:2px solid #E8FAF6;display:flex;gap:10px;align-items:center}
+.prog-icon{font-size:28px}
+.prog-info{flex:1}
+.prog-label{font-size:11px;font-weight:800;color:#aaa;margin-bottom:4px}
+.prog-bar-wrap{background:#EEE;border-radius:10px;height:8px;overflow:hidden}
+.prog-bar{background:linear-gradient(90deg,#86E3CE,#2A9D8F);height:8px;border-radius:10px;transition:width .5s}
+.prog-pct{font-size:11px;font-weight:800;color:#2A9D8F;margin-top:3px}
+
+/* ── CARD SURAT ── */
+.list{display:flex;flex-direction:column;gap:10px}
+.card{border-radius:20px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;text-decoration:none;transition:transform .15s;position:relative;overflow:hidden}
+.card:active{transform:scale(.97)}
+.card.locked{opacity:.5;cursor:default;pointer-events:none}
+.card svg.bg{position:absolute;right:-10px;top:50%;transform:translateY(-50%);opacity:0.18;pointer-events:none}
+.card-dot{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;line-height:1.2;text-align:center;position:relative;z-index:1}
+.info{flex:1;position:relative;z-index:1}
+.arabic{font-family:"Amiri",serif;font-size:18px;margin-bottom:2px}
+.latin{font-size:13px;font-weight:900}
+.ayat{font-size:10px;font-weight:700;opacity:.7}
+.right{text-align:right;position:relative;z-index:1}
+.badge{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:800}
+.badge.done{background:#2A9D8F!important;color:white!important}
+.badge.submitted{background:#FFDD94!important;color:#8B6000!important}
+.badge.lulus{background:#86E3CE!important;color:#1A7A6A!important}
+.arrow{font-size:14px;font-weight:900;margin-top:2px}
+.star-row{font-size:10px;margin-top:2px}
+
+/* ── WARNA SURAT ── */
+.c1{background:#C8F5EC}.c1 .card-dot{background:#86E3CE;color:#1A7A6A}.c1 .arabic,.c1 .latin{color:#1A7A6A}.c1 .ayat{color:#2A9D8F}.c1 .badge{background:#86E3CE;color:#1A7A6A}.c1 .arrow{color:#2A9D8F}
+.c2{background:#D8EDBA}.c2 .card-dot{background:#B8DC80;color:#3D6B0F}.c2 .arabic,.c2 .latin{color:#3D6B0F}.c2 .ayat{color:#5A8A2A}.c2 .badge{background:#B8DC80;color:#3D6B0F}.c2 .arrow{color:#5A8A2A}
+.c3{background:#FFE8A0}.c3 .card-dot{background:#FFDD94;color:#8B6000}.c3 .arabic,.c3 .latin{color:#8B6000}.c3 .ayat{color:#B8860B}.c3 .badge{background:#FFDD94;color:#8B6000}.c3 .arrow{color:#B8860B}
+.c4{background:#FFBFB8}.c4 .card-dot{background:#FA897B;color:#8B1A0E}.c4 .arabic,.c4 .latin{color:#8B1A0E}.c4 .ayat{color:#C0392B}.c4 .badge{background:#FA897B;color:#8B1A0E}.c4 .arrow{color:#C0392B}
+.c5{background:#E8D8F5}.c5 .card-dot{background:#CCABD8;color:#5A2D7A}.c5 .arabic,.c5 .latin{color:#5A2D7A}.c5 .ayat{color:#7D5A9E}.c5 .badge{background:#CCABD8;color:#5A2D7A}.c5 .arrow{color:#7D5A9E}
+
+/* ── TOMBOL GANTI NAMA ── */
+.ganti-nama{text-align:center;margin-top:6px;margin-bottom:10px}
+.ganti-nama button{background:none;border:none;font-family:"Nunito",sans-serif;font-size:11px;font-weight:800;color:#ccc;cursor:pointer;text-decoration:underline}
+
+/* ── FOOTER ── */
+.footer{text-align:center;margin-top:20px;font-size:10px;color:#ddd;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- MODAL INPUT NAMA -->
+<div id="modal-nama">
+  <div class="mn-av"><video id="vModal" loop muted playsinline webkit-playsinline autoplay preload="auto"></video></div>
+  <div class="mn-title">Assalamu'alaikum! 👋</div>
+  <div class="mn-sub">Aku Miss Diah, guru mengaji AI.<br>Siapa namamu?</div>
+  <input class="mn-input" id="inputNama" type="text" placeholder="Nama lengkapmu..." maxlength="40" autocomplete="off">
+  <select class="mn-kelas" id="inputKelas">
+    <option value="">-- Pilih Kelas --</option>
+    <option value="TK A">TK A</option>
+    <option value="TK B">TK B</option>
+    <option value="SD Kelas 1">SD Kelas 1</option>
+    <option value="SD Kelas 2">SD Kelas 2</option>
+    <option value="SD Kelas 3">SD Kelas 3</option>
+    <option value="SD Kelas 4">SD Kelas 4</option>
+    <option value="SD Kelas 5">SD Kelas 5</option>
+    <option value="SD Kelas 6">SD Kelas 6</option>
+    <option value="SMP Kelas 7">SMP Kelas 7</option>
+    <option value="SMP Kelas 8">SMP Kelas 8</option>
+    <option value="SMP Kelas 9">SMP Kelas 9</option>
+  </select>
+  <button class="mn-btn" onclick="simpanNama()">Mulai Belajar! 🌟</button>
+</div>
+
+<!-- HALAMAN UTAMA -->
+<div class="wrap" id="main-content" style="display:none">
+  <div class="hero">
+    <div class="avatar"><video id="vMenu" loop muted playsinline webkit-playsinline autoplay preload="auto"></video></div>
+    <div class="hero-title">Miss Diah</div>
+    <div class="hero-sub">Guru Mengaji AI</div>
+    <div class="hero-greeting" id="heroGreeting"></div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="prog-box">
+    <div class="prog-icon">📖</div>
+    <div class="prog-info">
+      <div class="prog-label">PROGRESS HAFALAN</div>
+      <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+      <div class="prog-pct" id="progPct">0 dari 4 surat selesai</div>
+    </div>
+  </div>
+
+  <div class="list">
+
+    <a href="ikhlas.html" class="card c1" id="card-ikhlas">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><circle cx="90" cy="20" r="30" fill="#2A9D8F"/><circle cx="110" cy="70" r="20" fill="#2A9D8F"/><circle cx="60" cy="85" r="14" fill="#2A9D8F"/><circle cx="30" cy="10" r="8" fill="#2A9D8F"/></svg>
+      <div class="card-dot">QS<br>112</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x625;&#x62e;&#x644;&#x627;&#x635;</div>
+        <div class="latin">Al-Ikhlas</div>
+        <div class="ayat">4 ayat</div>
+        <div class="star-row" id="star-ikhlas"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-ikhlas">Tersedia</div><div class="arrow">&#8594;</div></div>
+    </a>
+
+    <a href="fatihah.html" class="card c2" id="card-fatihah">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><rect x="70" y="5" width="40" height="40" rx="10" fill="#5A8A2A"/><rect x="85" y="55" width="30" height="30" rx="8" fill="#5A8A2A"/><rect x="50" y="70" width="20" height="20" rx="5" fill="#5A8A2A"/><rect x="30" y="5" width="15" height="15" rx="4" fill="#5A8A2A"/></svg>
+      <div class="card-dot">QS<br>1</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x641;&#x627;&#x62a;&#x62d;&#x629;</div>
+        <div class="latin">Al-Fatihah</div>
+        <div class="ayat">7 ayat</div>
+        <div class="star-row" id="star-fatihah"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-fatihah">Tersedia</div><div class="arrow">&#8594;</div></div>
+    </a>
+
+    <a href="falaq.html" class="card c3" id="card-falaq">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><polygon points="95,5 110,35 80,35" fill="#B8860B"/><polygon points="100,55 115,85 85,85" fill="#B8860B"/><polygon points="60,70 72,90 48,90" fill="#B8860B"/><polygon points="40,5 50,22 30,22" fill="#B8860B"/></svg>
+      <div class="card-dot">QS<br>113</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x641;&#x64e;&#x644;&#x64e;&#x642;</div>
+        <div class="latin">Al-Falaq</div>
+        <div class="ayat">5 ayat</div>
+        <div class="star-row" id="star-falaq"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-falaq">Tersedia</div><div class="arrow">&#8594;</div></div>
+    </a>
+
+    <a href="nas.html" class="card c4" id="card-nas">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><path d="M90 10 Q110 30 95 50 Q80 70 100 85" stroke="#C0392B" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M65 20 Q80 40 65 60 Q50 80 68 92" stroke="#C0392B" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="35" cy="15" r="7" fill="#C0392B"/><circle cx="30" cy="75" r="5" fill="#C0392B"/></svg>
+      <div class="card-dot">QS<br>114</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x646;&#x651;&#x64e;&#x627;&#x633;</div>
+        <div class="latin">An-Nas</div>
+        <div class="ayat">6 ayat</div>
+        <div class="star-row" id="star-nas"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-nas">Tersedia</div><div class="arrow">&#8594;</div></div>
+    </a>
+
+    <div class="card c5 locked">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><circle cx="85" cy="25" r="18" fill="#7D5A9E"/><circle cx="105" cy="65" r="12" fill="#7D5A9E"/><circle cx="65" cy="80" r="8" fill="#7D5A9E"/></svg>
+      <div class="card-dot">QS<br>...</div>
+      <div class="info"><div class="latin" style="color:#7D5A9E">Surat Berikutnya</div><div class="ayat">Segera hadir</div></div>
+      <div class="right"><div class="badge" style="background:#CCABD8;color:#5A2D7A">Segera</div></div>
+    </div>
+
+  </div>
+
+  <div class="ganti-nama"><button onclick="gantiNama()">✏️ Ganti nama / kelas</button></div>
+  <div class="footer">Guru Mengaji AI - Miss Diah 2025</div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  STORAGE HELPERS
+// ══════════════════════════════════════
+var SURATS = ["ikhlas","fatihah","falaq","nas"];
+
+function getState(){
+  try{ return JSON.parse(localStorage.getItem("gmAI_state")||"{}"); }
+  catch(e){ return {}; }
+}
+function saveState(s){
+  try{ localStorage.setItem("gmAI_state", JSON.stringify(s)); }catch(e){}
+}
+function getSiswa(){
+  try{ return JSON.parse(localStorage.getItem("gmAI_siswa")||"null"); }
+  catch(e){ return null; }
+}
+function saveSiswa(obj){
+  try{ localStorage.setItem("gmAI_siswa", JSON.stringify(obj)); }catch(e){}
+}
+
+// ══════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════
+window.onload = function(){
+  // Play video avatar modal
+  var vm = document.getElementById("vModal");
+  if(vm){ vm.src="video/smile.mp4"; vm.load(); vm.play().catch(function(){}); }
+
+  var siswa = getSiswa();
+  if(!siswa || !siswa.nama){
+    document.getElementById("modal-nama").style.display="flex";
+    document.getElementById("main-content").style.display="none";
+  } else {
+    document.getElementById("modal-nama").style.display="none";
+    showMain(siswa);
+  }
+};
+
+// ══════════════════════════════════════
+//  SIMPAN NAMA
+// ══════════════════════════════════════
+function simpanNama(){
+  var nama = document.getElementById("inputNama").value.trim();
+  var kelas = document.getElementById("inputKelas").value;
+  if(!nama){ alert("Masukkan namamu dulu ya! 😊"); return; }
+  if(!kelas){ alert("Pilih kelasmu dulu ya! 😊"); return; }
+  var siswa = { nama: nama, kelas: kelas, terdaftar: new Date().toISOString() };
+  saveSiswa(siswa);
+  document.getElementById("modal-nama").style.display="none";
+  showMain(siswa);
+}
+
+// ══════════════════════════════════════
+//  GANTI NAMA
+// ══════════════════════════════════════
+function gantiNama(){
+  if(!confirm("Ganti nama dan kelas? Progress tetap tersimpan.")) return;
+  document.getElementById("inputNama").value="";
+  document.getElementById("inputKelas").value="";
+  document.getElementById("modal-nama").style.display="flex";
+  document.getElementById("main-content").style.display="none";
+}
+
+// ══════════════════════════════════════
+//  SHOW MAIN
+// ══════════════════════════════════════
+function showMain(siswa){
+  document.getElementById("main-content").style.display="block";
+
+  // Avatar menu
+  var v = document.getElementById("vMenu");
+  if(v){ v.src="video/smile.mp4"; v.load(); v.play().catch(function(){}); }
+
+  // Greeting
+  var jam = new Date().getHours();
+  var salam = jam<11?"Selamat Pagi":jam<15?"Selamat Siang":jam<18?"Selamat Sore":"Selamat Malam";
+  document.getElementById("heroGreeting").textContent = salam+", "+siswa.nama+" ("+siswa.kelas+") 👋";
+
+  updateProgress();
+  updateBadges();
+}
+
+// ══════════════════════════════════════
+//  UPDATE PROGRESS BAR
+// ══════════════════════════════════════
+function updateProgress(){
+  var state = getState();
+  var selesai = SURATS.filter(function(s){ return state[s] && state[s].status==="selesai"; }).length;
+  var pct = Math.round(selesai / SURATS.length * 100);
+  document.getElementById("progBar").style.width = pct+"%";
+  document.getElementById("progPct").textContent = selesai+" dari "+SURATS.length+" surat selesai";
+}
+
+// ══════════════════════════════════════
+//  UPDATE BADGE PER SURAT
+// ══════════════════════════════════════
+function updateBadges(){
+  var state = getState();
+  SURATS.forEach(function(id){
+    var badge = document.getElementById("badge-"+id);
+    var star  = document.getElementById("star-"+id);
+    if(!badge) return;
+    var s = state[id]||{};
+
+    if(s.status==="lulus"){
+      badge.textContent="✅ Lulus";
+      badge.className="badge lulus";
+      if(star) star.textContent="⭐⭐⭐";
+    } else if(s.status==="submitted"){
+      badge.textContent="⏳ Menunggu Guru";
+      badge.className="badge submitted";
+      if(star) star.textContent="";
+    } else if(s.status==="selesai"){
+      badge.textContent="✔ Selesai";
+      badge.className="badge done";
+      if(star) star.textContent="";
+    } else {
+      badge.textContent="Tersedia";
+      badge.className="badge";
+      if(star) star.textContent="";
+    }
+  });
+}
+</script>
+</body>
+</html>
