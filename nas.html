@@ -288,7 +288,7 @@ function goPbk(){
 function goUjian(){showPage("pg-ujian");}
 function selesaiUjian(){
   var full=getState();full[SURAT_ID]={status:"selesai",selesaiAt:new Date().toISOString()};saveState(full);
-  showPage("pg-win");launchFW();bigConfetti();
+  showPage("pg-win");launchFW();bigConfetti();playPraise(7);
   var siswa=getSiswa();
   if(siswa&&siswa.nama){document.getElementById("winMsg").innerHTML="Alhamdulillah, <strong>"+siswa.nama+"</strong>!<br>Kamu sudah hafal<br><strong style='color:#C0392B'>An-Nas</strong>!";}
 }
@@ -334,7 +334,7 @@ async function kirimKeGuru(){
     await window._addDoc(window._col(db,"submissions"),{nama:siswa.nama,kelas:siswa.kelas,surat:SURAT_NAMA,suratId:SURAT_ID,audioUrls:audioUrls,catatan:catatan,status:"menunggu",kirimAt:window._ts(),jmlRekaman:recKeys.length});
     var full=getState();full[SURAT_ID]={status:"submitted",submittedAt:new Date().toISOString()};saveState(full);
     document.getElementById("uploadProgress").style.display="none";
-    alert("✅ Alhamdulillah!\n\nRekaman "+siswa.nama+" sudah terkirim!\nBu Guru bisa mendengarkan sekarang 😊");
+    playPraise(Math.floor(Math.random()*6));alert("✅ Alhamdulillah!\n\nRekaman "+siswa.nama+" sudah terkirim!\nBu Guru bisa mendengarkan sekarang 😊");
     location.href="index.html";
   }catch(err){
     document.getElementById("uploadProgress").style.display="none";
@@ -342,6 +342,7 @@ async function kirimKeGuru(){
     alert("❌ Gagal: "+err.message+"\n\nCoba lagi ya!");
   }
 }
+function playPraise(idx){var a=new Audio("audio/praise"+idx+".mp3");a.play().catch(function(){});}
 function showVid(type){["vSp","vS"].forEach(function(id){var v=document.getElementById(id);if(v){v.src="video/"+(type==="thumb"?"thumb":"smile")+".mp4";v.load();v.play().catch(function(){});}});}
 function confetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<30;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*.8+"s;animation-duration:"+(1.5+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},3000);}
 function bigConfetti(){var w=document.getElementById("cfw");w.innerHTML="";w.style.display="block";var col=["#86E3CE","#FFDD94","#FA897B","#CCABD8","#D0E6A5"];for(var i=0;i<60;i++){var p=document.createElement("div");p.className="cfp";p.style.cssText="left:"+Math.random()*100+"%;top:-10px;width:"+(6+Math.random()*8)+"px;height:"+(6+Math.random()*8)+"px;background:"+col[~~(Math.random()*col.length)]+";animation-delay:"+Math.random()*1.2+"s;animation-duration:"+(2+Math.random())+"s";w.appendChild(p);}setTimeout(function(){w.style.display="none";},4000);}
