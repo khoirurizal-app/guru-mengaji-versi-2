@@ -214,9 +214,7 @@ window.onload=function(){
 var PAGES=["pg-splash","pg-main","pg-pbk","pg-ujian","pg-win","pg-submit"];
 function showPage(id){PAGES.forEach(function(p){document.getElementById(p).style.display="none";});document.getElementById(id).style.display="block";}
 
-function startBelajar(){
-  showPage("pg-main");
-  var vS=document.getElementById("vS");vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});
+function startBelajar(){var idx=Math.floor(Math.random()*4);var a=new Audio("audio/semangat"+idx+".mp3");a.onended=function(){doStartBelajar();};a.play().catch(function(){doStartBelajar();});}function doStartBelajar(){showPage("pg-main");var vS=document.getElementById("vS");vS.src="video/smile.mp4";vS.load();vS.play().catch(function(){});ci=0;recordings={};loadSeg();});
   // Selalu mulai dari awal (bismillah) - bug fix
   ci=0;recordings={};loadSeg();
 }
