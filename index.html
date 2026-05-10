@@ -229,11 +229,55 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
       <div class="right"><div class="badge" id="badge-nas">Tersedia</div><div class="arrow">→</div></div>
     </a>
 
-    <div class="card c5 locked">
-      <div class="card-dot">QS<br>...</div>
-      <div class="info"><div class="latin" style="color:#7D5A9E">Surat Berikutnya</div><div class="ayat">Segera hadir</div></div>
-      <div class="right"><div class="badge" style="background:#CCABD8;color:#5A2D7A">Segera</div></div>
-    </div>
+
+    <a href="kafirun.html" class="card c1">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><circle cx="90" cy="20" r="30" fill="#2A9D8F"/><circle cx="110" cy="70" r="20" fill="#2A9D8F"/></svg>
+      <div class="card-dot">QS<br>109</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x643;&#x627;&#x641;&#x631;&#x648;&#x646;</div>
+        <div class="latin">Al-Kafirun</div>
+        <div class="ayat">6 ayat</div>
+        <div class="star-row" id="star-kafirun"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-kafirun">Tersedia</div><div class="arrow">→</div></div>
+    </a>
+
+    <a href="kautsar.html" class="card c2">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><rect x="70" y="5" width="40" height="40" rx="10" fill="#5A8A2A"/><rect x="85" y="55" width="30" height="30" rx="8" fill="#5A8A2A"/></svg>
+      <div class="card-dot">QS<br>108</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x643;&#x648;&#x62b;&#x631;</div>
+        <div class="latin">Al-Kautsar</div>
+        <div class="ayat">3 ayat</div>
+        <div class="star-row" id="star-kautsar"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-kautsar">Tersedia</div><div class="arrow">→</div></div>
+    </a>
+
+    <a href="lahab.html" class="card c3">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><polygon points="95,5 110,35 80,35" fill="#B8860B"/><polygon points="100,55 115,85 85,85" fill="#B8860B"/></svg>
+      <div class="card-dot">QS<br>111</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x644;&#x647;&#x628;</div>
+        <div class="latin">Al-Lahab</div>
+        <div class="ayat">5 ayat</div>
+        <div class="star-row" id="star-lahab"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-lahab">Tersedia</div><div class="arrow">→</div></div>
+    </a>
+
+    <a href="nasr.html" class="card c4">
+      <svg class="bg" width="120" height="100" viewBox="0 0 120 100"><path d="M90 10 Q110 30 95 50 Q80 70 100 85" stroke="#C0392B" stroke-width="12" fill="none" stroke-linecap="round"/></svg>
+      <div class="card-dot">QS<br>110</div>
+      <div class="info">
+        <div class="arabic">&#x633;&#x648;&#x631;&#x629; &#x627;&#x644;&#x646;&#x635;&#x631;</div>
+        <div class="latin">An-Nasr</div>
+        <div class="ayat">3 ayat</div>
+        <div class="star-row" id="star-nasr"></div>
+      </div>
+      <div class="right"><div class="badge" id="badge-nasr">Tersedia</div><div class="arrow">→</div></div>
+    </a>
+
   </div>
 
   <div class="ganti-nama"><button onclick="gantiNama()">✏️ Ganti nama / avatar</button></div>
@@ -241,7 +285,7 @@ body{font-family:"Nunito",sans-serif;min-height:100vh;background:#FFF9F5;padding
 </div>
 
 <script>
-var SURATS=["ikhlas","fatihah","falaq","nas"];
+var SURATS=["ikhlas","fatihah","falaq","nas","kafirun","kautsar","lahab","nasr"];
 var selectedAvatar="", uploadedPhotoData="";
 
 function getState(){try{return JSON.parse(localStorage.getItem("gmAI_state")||"{}");}catch(e){return {};}}
